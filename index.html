@@ -20,9 +20,9 @@
   .slide-subtitle { padding: 4px 28px 16px 28px; font-size: 13px; color: #9CA3AF; font-weight: 400; }
   .slide-content { padding: 0 20px 24px 20px; }
   .slide-content svg { width: 100%; height: auto; display: block; }
-  .legend { display: flex; gap: 24px; padding: 8px 28px 16px 28px; font-size: 12px; color: #6B7280; }
+  .legend { display: flex; gap: 24px; padding: 8px 28px 16px 28px; font-size: 12px; color: #6B7280; flex-wrap: wrap; }
   .legend-item { display: flex; align-items: center; gap: 8px; }
-  .legend-color { width: 14px; height: 14px; border-radius: 3px; }
+  .legend-color { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
 
   .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 32px; background: #E5E7EB; }
   @media (max-width: 768px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
@@ -41,7 +41,7 @@
   .abc-card.a h3 { color: #A6192E; } .abc-card.b h3 { color: #E8923F; } .abc-card.c h3 { color: #2D8B4E; }
   .abc-metric { display: flex; align-items: center; margin: 10px 0; gap: 12px; }
   .abc-metric-label { font-size: 13px; font-weight: 600; color: #4B5563; min-width: 60px; }
-  .abc-metric-bar { flex: 1; height: 28px; background: #E5E7EB; border-radius: 4px; overflow: visible; position: relative; }
+  .abc-metric-bar { flex: 1; height: 28px; background: #E5E7EB; border-radius: 4px; overflow: visible; }
   .abc-metric-fill { height: 100%; display: flex; align-items: center; border-radius: 4px; }
   .abc-metric-value { font-weight: 700; font-size: 15px; white-space: nowrap; }
   .abc-card.a .abc-metric-fill { background: #A6192E; } .abc-card.b .abc-metric-fill { background: #E8923F; } .abc-card.c .abc-metric-fill { background: #2D8B4E; }
@@ -240,16 +240,18 @@
   </div>
 </div>
 
-<!-- СЛАЙД 3 -->
+<!-- СЛАЙД 3: ОБНОВЛЕННЫЙ — с прогнозом 2026-2027 и переделом рынка -->
 <div class="slide">
-  <div class="slide-title">3. Структурный шок: банкротство Артекс</div>
-  <div class="slide-subtitle">Доля Артекс в совокупной выручке отрасли • май 2025: дело №А56-42790/2025</div>
+  <div class="slide-title">3. Структурный шок: банкротство Артекс и прогноз рынка</div>
+  <div class="slide-subtitle">Историческая динамика 2020–2025 • Прогноз 2026–2027 • Перераспределение доли Артекс</div>
   <div class="slide-content">
-    <svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-      <line x1="50" y1="80" x2="870" y2="80" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="50" y1="160" x2="870" y2="160" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="50" y1="240" x2="870" y2="240" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="50" y1="320" x2="870" y2="320" stroke="#F3F4F6" stroke-width="1"/>
+    <svg viewBox="0 0 1100 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- Сетка -->
+      <line x1="50" y1="80" x2="1050" y2="80" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="50" y1="160" x2="1050" y2="160" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="50" y1="240" x2="1050" y2="240" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="50" y1="320" x2="1050" y2="320" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="50" y1="400" x2="1050" y2="400" stroke="#F3F4F6" stroke-width="1"/>
 
       <text x="50" y="84" text-anchor="end" fill="#9CA3AF" font-size="10">50</text>
       <text x="50" y="164" text-anchor="end" fill="#9CA3AF" font-size="10">40</text>
@@ -258,51 +260,105 @@
       <text x="50" y="404" text-anchor="end" fill="#9CA3AF" font-size="10">10</text>
       <text x="30" y="44" fill="#9CA3AF" font-size="11">млрд руб.</text>
 
-      <rect x="70" y="310" width="90" height="90" fill="#D1D5DB" rx="3"/>
-      <rect x="200" y="290" width="90" height="110" fill="#D1D5DB" rx="3"/>
-      <rect x="330" y="285" width="90" height="115" fill="#D1D5DB" rx="3"/>
-      <rect x="460" y="250" width="90" height="150" fill="#D1D5DB" rx="3"/>
-      <rect x="590" y="258" width="90" height="142" fill="#D1D5DB" rx="3"/>
-      <rect x="720" y="270" width="90" height="130" fill="#D1D5DB" rx="3"/>
+      <!-- ИСТОРИЯ: 2020-2025 -->
+      <!-- Рынок без Артекс -->
+      <rect x="70" y="310" width="70" height="90" fill="#D1D5DB" rx="3"/>
+      <rect x="170" y="290" width="70" height="110" fill="#D1D5DB" rx="3"/>
+      <rect x="270" y="285" width="70" height="115" fill="#D1D5DB" rx="3"/>
+      <rect x="370" y="250" width="70" height="150" fill="#D1D5DB" rx="3"/>
+      <rect x="470" y="258" width="70" height="142" fill="#D1D5DB" rx="3"/>
+      <rect x="570" y="270" width="70" height="130" fill="#D1D5DB" rx="3"/>
 
-      <rect x="70" y="180" width="90" height="130" fill="#A6192E" opacity="0.6" rx="3"/>
-      <rect x="200" y="195" width="90" height="95" fill="#A6192E" opacity="0.6" rx="3"/>
-      <rect x="330" y="165" width="90" height="120" fill="#A6192E" opacity="0.6" rx="3"/>
-      <rect x="460" y="150" width="90" height="100" fill="#A6192E" opacity="0.6" rx="3"/>
-      <rect x="590" y="155" width="90" height="103" fill="#A6192E" opacity="0.6" rx="3"/>
-      <rect x="720" y="165" width="90" height="105" fill="#A6192E" opacity="0.6" rx="3"/>
+      <!-- Артекс исторический -->
+      <rect x="70" y="180" width="70" height="130" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="170" y="195" width="70" height="95" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="270" y="165" width="70" height="120" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="370" y="150" width="70" height="100" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="470" y="155" width="70" height="103" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="570" y="165" width="70" height="105" fill="#A6192E" opacity="0.6" rx="3"/>
 
-      <!-- Метки с "млрд" НАД барами -->
-      <text x="115" y="172" text-anchor="middle" fill="#4B5563" font-size="13" font-weight="700">33.8 млрд</text>
-      <text x="245" y="187" text-anchor="middle" fill="#4B5563" font-size="13" font-weight="700">40.9 млрд</text>
-      <text x="375" y="157" text-anchor="middle" fill="#4B5563" font-size="13" font-weight="700">41.8 млрд</text>
-      <text x="505" y="142" text-anchor="middle" fill="#4B5563" font-size="13" font-weight="700">47.9 млрд</text>
-      <text x="635" y="147" text-anchor="middle" fill="#4B5563" font-size="13" font-weight="700">46.9 млрд</text>
-      <text x="765" y="157" text-anchor="middle" fill="#4B5563" font-size="13" font-weight="700">44.4 млрд</text>
+      <!-- Метки истории -->
+      <text x="105" y="172" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">33.8</text>
+      <text x="205" y="187" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">40.9</text>
+      <text x="305" y="157" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">41.8</text>
+      <text x="405" y="142" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">47.9</text>
+      <text x="505" y="147" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">46.9</text>
+      <text x="605" y="157" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">44.4</text>
 
-      <!-- Доля Артекс внутри -->
-      <text x="115" y="240" text-anchor="middle" fill="white" font-size="11" font-weight="700">31%</text>
-      <text x="245" y="240" text-anchor="middle" fill="white" font-size="11" font-weight="700">16%</text>
-      <text x="375" y="220" text-anchor="middle" fill="white" font-size="11" font-weight="700">24%</text>
-      <text x="505" y="200" text-anchor="middle" fill="white" font-size="11" font-weight="700">21%</text>
-      <text x="635" y="205" text-anchor="middle" fill="white" font-size="11" font-weight="700">20%</text>
-      <text x="765" y="215" text-anchor="middle" fill="white" font-size="11" font-weight="700">20%</text>
+      <!-- Доли Артекс внутри -->
+      <text x="105" y="240" text-anchor="middle" fill="white" font-size="10" font-weight="700">31%</text>
+      <text x="205" y="240" text-anchor="middle" fill="white" font-size="10" font-weight="700">16%</text>
+      <text x="305" y="220" text-anchor="middle" fill="white" font-size="10" font-weight="700">24%</text>
+      <text x="405" y="200" text-anchor="middle" fill="white" font-size="10" font-weight="700">21%</text>
+      <text x="505" y="205" text-anchor="middle" fill="white" font-size="10" font-weight="700">20%</text>
+      <text x="605" y="215" text-anchor="middle" fill="white" font-size="10" font-weight="700">20%</text>
 
-      <text x="115" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2020</text>
-      <text x="245" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2021</text>
-      <text x="375" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2022</text>
-      <text x="505" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2023</text>
-      <text x="635" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2024</text>
-      <text x="765" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2025</text>
+      <text x="105" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2020</text>
+      <text x="205" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2021</text>
+      <text x="305" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2022</text>
+      <text x="405" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2023</text>
+      <text x="505" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2024</text>
+      <text x="605" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2025</text>
+
+      <!-- Разделитель ФАКТ | ПРОГНОЗ -->
+      <line x1="650" y1="60" x2="650" y2="410" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="8,4"/>
+      <rect x="590" y="40" width="120" height="20" rx="4" fill="white" stroke="#9CA3AF" stroke-width="1"/>
+      <text x="650" y="54" text-anchor="middle" fill="#9CA3AF" font-size="10" font-weight="700">← ФАКТ | ПРОГНОЗ →</text>
+
+      <!-- ПРОГНОЗ: 2026-2027 -->
+      <!-- Рынок 2026 (без Артекс — он ушел) -->
+      <rect x="690" y="285" width="70" height="115" fill="#D1D5DB" rx="3"/>
+      <text x="725" y="340" text-anchor="middle" fill="#4B5563" font-size="11" font-weight="700">42.0</text>
+
+      <!-- Рынок 2027 -->
+      <rect x="790" y="300" width="70" height="100" fill="#D1D5DB" rx="3"/>
+      <text x="825" y="355" text-anchor="middle" fill="#4B5563" font-size="11" font-weight="700">39.5</text>
+
+      <!-- Бывшая доля Артекс — перераспределяется -->
+      <!-- 2026: часть уходит другим, часть Verol -->
+      <rect x="690" y="265" width="70" height="20" fill="#A6192E" opacity="0.3" rx="3"/>
+      <text x="725" y="279" text-anchor="middle" fill="#A6192E" font-size="9" font-weight="600">Артекс 0</text>
+      <!-- Verol захват -->
+      <rect x="690" y="245" width="70" height="20" fill="#0A4B8F" rx="3"/>
+      <text x="725" y="259" text-anchor="middle" fill="white" font-size="9" font-weight="600">Verol +0.06</text>
+
+      <rect x="790" y="280" width="70" height="20" fill="#A6192E" opacity="0.3" rx="3"/>
+      <text x="825" y="294" text-anchor="middle" fill="#A6192E" font-size="9" font-weight="600">Артекс 0</text>
+      <rect x="790" y="260" width="70" height="20" fill="#0A4B8F" rx="3"/>
+      <text x="825" y="274" text-anchor="middle" fill="white" font-size="9" font-weight="600">Verol +0.08</text>
+
+      <!-- Стрелки перераспределения -->
+      <path d="M 640 220 Q 665 220 690 255" fill="none" stroke="#0A4B8F" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="660" y="215" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="700">захват</text>
+
+      <!-- Годы прогноза -->
+      <text x="725" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2026 (П)</text>
+      <text x="825" y="425" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2027 (П)</text>
+
+      <!-- Темпы падения -->
+      <text x="725" y="235" text-anchor="middle" fill="#A6192E" font-size="11" font-weight="700">−5.3%</text>
+      <text x="825" y="250" text-anchor="middle" fill="#A6192E" font-size="11" font-weight="700">−6.0%</text>
 
       <!-- Аннотация -->
-      <rect x="220" y="30" width="460" height="36" rx="6" fill="#FEF2F2" stroke="#A6192E" stroke-width="2"/>
-      <text x="450" y="53" text-anchor="middle" fill="#A6192E" font-size="13" font-weight="700">Высвобождение 8.8 млрд руб. — 20% рынка без хозяина</text>
+      <rect x="250" y="22" width="600" height="30" rx="6" fill="#FEF2F2" stroke="#A6192E" stroke-width="2"/>
+      <text x="550" y="42" text-anchor="middle" fill="#A6192E" font-size="12" font-weight="700">8.8 млрд руб. Артекс не исчезают — они перераспределяются между оставшимися игроками</text>
+
+      <!-- Аннотация Verol -->
+      <rect x="880" y="220" width="190" height="70" rx="6" fill="white" stroke="#0A4B8F" stroke-width="2"/>
+      <text x="975" y="242" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">ДОЛЯ VEROL</text>
+      <text x="975" y="260" text-anchor="middle" fill="#4B5563" font-size="11">2025: 1.50%</text>
+      <text x="975" y="278" text-anchor="middle" fill="#0A4B8F" font-size="11" font-weight="700">2027: 1.76%</text>
+
+      <!-- Стрелка от аннотации -->
+      <line x1="880" y1="255" x2="860" y2="255" stroke="#0A4B8F" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+      <defs><marker id="arrowBlue" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0A4B8F"/></marker></defs>
     </svg>
   </div>
   <div class="legend">
-    <div class="legend-item"><div class="legend-color" style="background:#A6192E;opacity:0.6"></div> Доля Артекс</div>
+    <div class="legend-item"><div class="legend-color" style="background:#A6192E;opacity:0.6"></div> Доля Артекс (исторически)</div>
     <div class="legend-item"><div class="legend-color" style="background:#D1D5DB"></div> Рынок без Артекс</div>
+    <div class="legend-item"><div class="legend-color" style="background:#0A4B8F"></div> Захват доли Verol</div>
+    <div class="legend-item"><div class="legend-color" style="background:#A6192E;opacity:0.3"></div> Артекс — ушел с рынка</div>
   </div>
 </div>
 
@@ -315,21 +371,21 @@
       <h3>A-Позиции • FBO</h3>
       <div class="abc-metric"><span class="abc-metric-label">SKU</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:20%"></div></div><span class="abc-metric-value" style="color:#A6192E">20%</span></div>
       <div class="abc-metric"><span class="abc-metric-label">Выручка</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:80%"></div></div><span class="abc-metric-value" style="color:#A6192E">80%</span></div>
-      <div class="abc-steps">Топ-позиции остаются на складах МП. Быстрая доставка, защита органической выдачи, высокий рейтинг карточек.</div>
+      <div class="abc-steps">Топ-позиции остаются на складах МП. Быстрая доставка, защита органической выдачи.</div>
       <div class="abc-effect">Защита 80% выручки • Страховка запасов</div>
     </div>
     <div class="abc-card b">
       <h3>B-Позиции • FBS</h3>
       <div class="abc-metric"><span class="abc-metric-label">SKU</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:30%"></div></div><span class="abc-metric-value" style="color:#E8923F">30%</span></div>
       <div class="abc-metric"><span class="abc-metric-label">Выручка</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:15%"></div></div><span class="abc-metric-value" style="color:#E8923F">15%</span></div>
-      <div class="abc-steps">Вывод со складов МП → собственный склад → смена модели FBO→FBS → отгрузка в ПВЗ при заказе.</div>
+      <div class="abc-steps">Вывод со складов МП → свой склад → FBO→FBS → отгрузка в ПВЗ.</div>
       <div class="abc-effect">Комиссия 12% (было 22%) • Экономия ~15 млн/год</div>
     </div>
     <div class="abc-card c">
       <h3>C-Позиции • 3PL</h3>
       <div class="abc-metric"><span class="abc-metric-label">SKU</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:50%"></div></div><span class="abc-metric-value" style="color:#2D8B4E">50%</span></div>
       <div class="abc-metric"><span class="abc-metric-label">Выручка</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:5%"></div></div><span class="abc-metric-value" style="color:#2D8B4E">5%</span></div>
-      <div class="abc-steps">Вывод неликвида → 3PL-склад оператора → подключение API → 3PL хранит, пакует, отгружает.</div>
+      <div class="abc-steps">Вывод неликвида → 3PL-склад → API → 3PL хранит, пакует, отгружает.</div>
       <div class="abc-effect">Хранение в 3× дешевле • Высвобождение ~50 млн кэша</div>
     </div>
   </div>
@@ -342,7 +398,7 @@
   <div class="two-col">
     <div class="strat-card red">
       <h4>Захват доли Артекс</h4>
-      <ul><li>60+ дилеров Артекс остались без поставщика</li><li>Оптовые тендеры на отделку ЖК</li><li>Региональные розничные DIY-сети</li></ul>
+      <ul><li>60+ дилеров Артекс без поставщика</li><li>Оптовые тендеры на отделку ЖК</li><li>Региональные розничные DIY-сети</li></ul>
       <div class="total">Доп. выручка: +62 млн руб./год<br>Доп. прибыль: +7.4 млн руб./год<br>Доля рынка: 1.50% → 1.64%</div>
     </div>
     <div class="strat-card green">
@@ -359,7 +415,6 @@
   <div class="slide-subtitle">Консолидированный эффект трех стратегических инициатив • Горизонт: 12–18 месяцев</div>
   <div class="slide-content">
     <svg viewBox="0 0 950 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-      <!-- Выручка 2025 -->
       <rect x="20" y="200" width="140" height="140" fill="#A6192E" rx="4"/>
       <rect x="20" y="260" width="140" height="40" fill="#D1D5DB" rx="4"/>
       <rect x="20" y="300" width="140" height="40" fill="#6B7280" rx="4"/>
@@ -367,11 +422,9 @@
       <text x="90" y="284" text-anchor="middle" fill="#4B5563" font-size="10" font-weight="600">D2C 15%</text>
       <text x="90" y="324" text-anchor="middle" fill="white" font-size="10" font-weight="600">Опт 10%</text>
       <text x="90" y="190" text-anchor="middle" fill="#0A4B8F" font-size="15" font-weight="700">667 млн ₽</text>
-      <!-- Метка под столбиком -->
       <rect x="40" y="348" width="100" height="20" rx="4" fill="#F3F4F6"/>
       <text x="90" y="362" text-anchor="middle" fill="#6B7280" font-size="10" font-weight="700">2025 • ФАКТ</text>
 
-      <!-- Выручка цель -->
       <rect x="360" y="160" width="140" height="110" fill="#A6192E" rx="4"/>
       <rect x="360" y="270" width="140" height="30" fill="#E8923F" rx="4"/>
       <rect x="360" y="300" width="140" height="15" fill="#2D8B4E" rx="4"/>
@@ -383,13 +436,11 @@
       <text x="430" y="332" text-anchor="middle" fill="#4B5563" font-size="9" font-weight="600">D2C 15%</text>
       <text x="430" y="368" text-anchor="middle" fill="white" font-size="9" font-weight="600">Опт 10%</text>
       <text x="430" y="150" text-anchor="middle" fill="#2D8B4E" font-size="15" font-weight="700">780 млн ₽</text>
-      <!-- Метка под столбиком -->
       <rect x="380" y="408" width="100" height="20" rx="4" fill="#E5E7EB"/>
       <text x="430" y="422" text-anchor="middle" fill="#2D8B4E" font-size="10" font-weight="700">ЦЕЛЬ • 12–18 мес.</text>
 
       <text x="250" y="310" text-anchor="middle" fill="#2D8B4E" font-size="22" font-weight="700">+17%</text>
 
-      <!-- Водопад -->
       <rect x="560" y="200" width="70" height="45" fill="#0A4B8F" rx="4"/>
       <text x="595" y="227" text-anchor="middle" fill="white" font-size="13" font-weight="700">43.3</text>
       <text x="595" y="193" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">2025</text>
