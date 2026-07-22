@@ -1,0 +1,564 @@
+import base64
+from io import BytesIO
+
+# ====================== ГЕНЕРАЦИЯ SVG-ГРАФИКОВ ======================
+
+def fig_to_svg(fig):
+    """Конвертирует matplotlib figure в SVG строку"""
+    buf = BytesIO()
+    fig.savefig(buf, format='svg', bbox_inches='tight', facecolor='#F9FAFB', edgecolor='none')
+    buf.seek(0)
+    svg = buf.read().decode('utf-8')
+    # Удаляем XML-декларацию для вставки в HTML
+    if svg.startswith('<?xml'):
+        svg = svg[svg.find('<svg'):]
+    buf.close()
+    return svg
+
+
+# ---------- ГРАФИК 1: РЫНОК + VEROL ----------
+fig1, ax = plt.subplots(figsize=(14, 7), facecolor=LIGHT_BG)
+ax.set_facecolor(LIGHT_BG)
+years = list(market.keys())
+x = np.arange(len(years))
+bars = ax.bar(x, [market[y] for y in years], 0.55, color=GREY, edgecolor='white', linewidth=1.5, zorder=2)
+for i, (bar, y) in enumerate(zip(bars, years)):
+    ax.text(bar.get_x() + bar.get_width()/2, market[y]/2, f'{market[y]:.1f}\nмлрд', 
+            ha='center', va='center', fontsize=11, fontweight='bold', color='#4B5563')
+changes = ['', '+21.2%', '+2.2%', '+14.4%', '-1.9%', '-5.5%']
+colors_ch = ['', GREEN, GREEN, GREEN, BURGUNDY, BURGUNDY]
+for i, (ch, cl) in enumerate(zip(changes, colors_ch)):
+    if ch:
+        ax.text(i, market[years[i]] + 1.2, ch, ha='center', fontsize=9, fontweight='bold', color=cl)
+ax2 = ax.twinx()
+ax2.plot(x, [verol_rev[y] for y in years], 'o-', color=BLUE, linewidth=3,
+         markersize=12, markerfacecolor='white', markeredgewidth=2.5, zorder=5)
+for i, y in enumerate(years):
+    offset = 25 if verol_rev[y] < 400 else 30
+    ax2.text(i, verol_rev[y] + offset, f'{verol_rev[y]:.0f} млн', ha='center', 
+            fontsize=9, fontweight='bold', color=BLUE,
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=BLUE, alpha=0.9))
+for i, y in enumerate(years):
+    ax.text(i, market[y] + 3.5, f'Доля\n{verol_share[y]:.3f}%', ha='center', 
+            fontsize=8, fontweight='bold', color=BLUE)
+ax.set_xticks(x)
+ax.set_xticklabels([str(y) for y in years], fontsize=12, fontweight='bold')
+ax.set_ylabel('Рынок, млрд руб.', fontsize=12, color=DARK_GREY)
+ax2.set_ylabel('Verol, млн руб.', fontsize=12, color=BLUE)
+ax.set_title('Рынок производителей обоев РФ и траектория Verol', fontsize=15, fontweight='bold', pad=15)
+ax.legend(handles=[Patch(facecolor=GREY, label='Рынок (млрд руб.)'),
+                   plt.Line2D([0], [0], color=BLUE, marker='o', linewidth=3, markersize=10,
+                              markerfacecolor='white', label='Verol (млн руб.)')],
+          loc='upper left', fontsize=10, framealpha=0.9)
+ax.grid(axis='y', alpha=0.3, zorder=0)
+ax.set_ylim(0, max(market.values()) * 1.3)
+plt.tight_layout()
+svg1 = fig_to_svg(fig1)
+plt.close(fig1)
+
+# ---------- ГРАФИК 2: ТОП-12 ----------
+fig2, ax = plt.subplots(figsize=(14, 8), facecolor=LIGHT_BG)
+ax.set_facecolor(LIGHT_BG)
+top12 = ranked[:12]
+names = [t[0] for t in reversed(top12)]
+revenues = [t[1] for t in reversed(top12)]
+ros_vals = [profit_2025[n] / (rev_2025_all[n] * 1000) * 100 for n in names]
+profits = [profit_2025[n] for n in names]
+colors_bar = [BLUE if n == 'Verol' else (BURGUNDY if n == 'Артекс' else GREY) for n in names]
+bars = ax.barh(range(12), revenues, 0.7, color=colors_bar, edgecolor='white', linewidth=1.5, zorder=2)
+for i, (bar, name, rev, ros, prof) in enumerate(zip(bars, names, revenues, ros_vals, profits)):
+    ax.text(rev + 0.15, i + 0.15, f'{rev:.3f} млрд', va='bottom', fontsize=9, fontweight='bold', color=DARK_GREY)
+    color_ros = GREEN if ros > 15 else (BURGUNDY if ros < 0 else DARK_GREY)
+    ax.text(rev + 0.15, i - 0.25, f'ROS: {ros:+.1f}% | Прибыль: {prof:+.0f} млн', 
+            va='top', fontsize=7.5, fontweight='bold', color=color_ros)
+ax.annotate('БАНКРОТ\nмай 2025\nУбыток 2.1 млрд', xy=(8.8, 11), fontsize=7.5, 
+            color=BURGUNDY, fontweight='bold', ha='right',
+            bbox=dict(boxstyle='round', facecolor='#FEE2E2', edgecolor=BURGUNDY))
+verol_idx = names.index('Verol')
+ax.annotate(f'Verol: {verol_rank}-е место из 20\n667 млн руб. | ROS +6.5%\nРост x47 за 5 лет',
+            xy=(0.667, verol_idx), xytext=(2.5, verol_idx + 0.5), fontsize=8, 
+            color=BLUE, fontweight='bold', arrowprops=dict(arrowstyle='->', color=BLUE, lw=2),
+            bbox=dict(boxstyle='round', facecolor='white', edgecolor=BLUE))
+loymina_idx = names.index('Лоймина')
+ax.annotate(f'Лучшая ROS: +29.4%\nПремиум B2B', xy=(1.3, loymina_idx), 
+            xytext=(2.8, loymina_idx), fontsize=7.5, color=GREEN, fontweight='bold',
+            arrowprops=dict(arrowstyle='->', color=GREEN, lw=1.5),
+            bbox=dict(boxstyle='round', facecolor='#F0FAF0', edgecolor=GREEN))
+ax.set_yticks(range(12))
+ax.set_yticklabels(names, fontsize=10, fontweight='bold')
+ax.set_xlabel('Выручка 2025, млрд руб.', fontsize=12)
+ax.set_title(f'Рейтинг производителей обоев РФ — 2025 год (12 из 20)', fontsize=15, fontweight='bold', pad=15)
+ax.grid(axis='x', alpha=0.3, zorder=0)
+ax.set_xlim(0, 10.5)
+plt.tight_layout()
+svg2 = fig_to_svg(fig2)
+plt.close(fig2)
+
+# ---------- ГРАФИК 3: РЫНОК БЕЗ АРТЕКСА ----------
+fig3, ax = plt.subplots(figsize=(14, 7), facecolor=LIGHT_BG)
+ax.set_facecolor(LIGHT_BG)
+ax.bar(x, [market_no_artex[y] for y in years], 0.55, color=GREY, edgecolor='white', 
+       linewidth=1.5, label='Рынок без Артекс', zorder=2)
+ax.bar(x, [artex_rev[y] for y in years], 0.55, bottom=[market_no_artex[y] for y in years],
+       color=BURGUNDY, edgecolor='white', linewidth=1.5, alpha=0.7, label='Артекс (банкрот)', zorder=2)
+for i, y in enumerate(years):
+    total = market[y]
+    ax.text(i, total + 1, f'{total:.1f}', ha='center', fontsize=10, fontweight='bold', color=DARK_GREY)
+    share_a = artex_rev[y] / total * 100
+    if share_a > 15:
+        ax.text(i, market_no_artex[y] + artex_rev[y]/2, f'Артекс\n{share_a:.0f}%', 
+                ha='center', fontsize=8, fontweight='bold', color='white')
+ax3 = ax.twinx()
+ax3.plot(x, [verol_rev[y] for y in years], 'o-', color=BLUE, linewidth=3,
+         markersize=12, markerfacecolor='white', markeredgewidth=2.5, zorder=5)
+for i, y in enumerate(years):
+    ax3.text(i, verol_rev[y] + 25, f'{verol_rev[y]:.0f} млн', ha='center', 
+            fontsize=9, fontweight='bold', color=BLUE)
+ax.annotate(f'Май 2025: банкротство Артекс\nВысвобождение 8.8 млрд руб.\nДоля рынка: {artex_rev[2025]/market[2025]*100:.0f}%',
+            xy=(5, market_no_artex[2025]), xytext=(3, 20), fontsize=8.5, color=BURGUNDY, 
+            fontweight='bold', ha='center',
+            arrowprops=dict(arrowstyle='->', color=BURGUNDY, lw=2, connectionstyle='arc3,rad=-0.3'),
+            bbox=dict(boxstyle='round', facecolor='#FEE2E2', edgecolor=BURGUNDY))
+ax.set_xticks(x)
+ax.set_xticklabels([str(y) for y in years], fontsize=12, fontweight='bold')
+ax.set_ylabel('Рынок, млрд руб.', fontsize=12, color=DARK_GREY)
+ax3.set_ylabel('Verol, млн руб.', fontsize=12, color=BLUE)
+ax.set_title('Эффект банкротства Артекс на рынок производителей обоев', fontsize=15, fontweight='bold', pad=15)
+ax.legend(handles=[Patch(facecolor=GREY, label='Рынок без Артекс'),
+                   Patch(facecolor=BURGUNDY, alpha=0.7, label='Артекс (банкрот)'),
+                   plt.Line2D([0], [0], color=BLUE, marker='o', linewidth=3, markersize=10,
+                              markerfacecolor='white', label='Verol (млн руб.)')],
+          loc='upper left', fontsize=9, framealpha=0.9)
+ax.grid(axis='y', alpha=0.3, zorder=0)
+ax.set_ylim(0, max(market.values()) * 1.25)
+plt.tight_layout()
+svg3 = fig_to_svg(fig3)
+plt.close(fig3)
+
+# ---------- ГРАФИК 5: ЗАХВАТ АРТЕКС + ПРЕМИУМ ----------
+fig5, axes5 = plt.subplots(1, 2, figsize=(16, 7), facecolor=LIGHT_BG)
+# Захват Артекс
+ax_l = axes5[0]
+ax_l.set_facecolor(LIGHT_BG)
+ax_l.barh(['Рынок Артекс'], [8.8], 0.3, color=BURGUNDY, alpha=0.25, edgecolor='white', linewidth=2)
+ax_l.barh(['Цель Verol'], [additional_revenue_artex/1000], 0.3, color=BLUE, edgecolor='white', linewidth=2)
+ax_l.text(8.8 + 0.2, 0, '8.8 млрд руб.', va='center', fontsize=11, fontweight='bold', color=BURGUNDY)
+ax_l.text(additional_revenue_artex/1000 + 0.05, 1, f'{additional_revenue_artex:.0f} млн', 
+        va='center', fontsize=11, fontweight='bold', color=BLUE)
+ax_l.annotate('', xy=(additional_revenue_artex/1000, 1), xytext=(additional_revenue_artex/1000, 0.2),
+            arrowprops=dict(arrowstyle='->', color=BLUE, lw=3))
+ax_l.text(1.5, 0.5, 'Захват\n0.7% доли', ha='center', fontsize=9, color=BLUE, fontweight='bold')
+ax_l.set_ylim(-0.5, 1.5)
+ax_l.set_xlim(0, 10)
+ax_l.set_yticks([0, 1])
+ax_l.set_yticklabels(['Рынок\nАртекс', 'Verol\nцель'], fontsize=9, fontweight='bold')
+ax_l.set_title('Захват доли Артекс', fontsize=13, fontweight='bold', color=BURGUNDY)
+ax_l.grid(axis='x', alpha=0.3)
+# Премиум B2B
+ax_r = axes5[1]
+ax_r.set_facecolor(LIGHT_BG)
+ros_bench = [('Verol\nсейчас', 6.5, BLUE), ('Медиана\nрынка', 5.3, GREY),
+             ('Обои\nФактура', 26.2, ORANGE), ('Лоймина', 29.4, GREEN),
+             ('Verol\nцель', 15.0, BLUE)]
+for i, (label, val, color) in enumerate(ros_bench):
+    ax_r.bar(i, val, 0.55, color=color, edgecolor='white', linewidth=2, zorder=3)
+    ax_r.text(i, val + 0.8, f'{val:.1f}%', ha='center', fontsize=10, fontweight='bold', color=color)
+ax_r.set_xticks(range(len(ros_bench)))
+ax_r.set_xticklabels([r[0] for r in ros_bench], fontsize=8.5, fontweight='bold')
+ax_r.set_ylabel('ROS, %', fontsize=11)
+ax_r.set_ylim(0, 36)
+ax_r.set_title('Премиум B2B: бенчмарки ROS', fontsize=13, fontweight='bold', color=GREEN)
+ax_r.grid(axis='y', alpha=0.3, zorder=0)
+plt.tight_layout()
+svg5 = fig_to_svg(fig5)
+plt.close(fig5)
+
+# ---------- ГРАФИК 6: ЦЕЛЕВАЯ МОДЕЛЬ ----------
+fig6, axes6 = plt.subplots(1, 2, figsize=(16, 7), facecolor=LIGHT_BG)
+ax_l6 = axes6[0]
+ax_l6.set_facecolor(LIGHT_BG)
+t = target_revenue
+ax_l6.bar(0, verol_revenue_2025*0.75, 0.5, color=BURGUNDY, edgecolor='white', linewidth=1.5, label='FBO', zorder=2)
+ax_l6.bar(0, verol_revenue_2025*0.15, 0.5, bottom=verol_revenue_2025*0.75, color=GREY, edgecolor='white', linewidth=1.5, label='D2C', zorder=2)
+ax_l6.bar(0, verol_revenue_2025*0.10, 0.5, bottom=verol_revenue_2025*0.90, color=DARK_GREY, edgecolor='white', linewidth=1.5, label='Опт', zorder=2)
+ax_l6.bar(1, t*0.55, 0.5, color=BURGUNDY, edgecolor='white', linewidth=1.5, label='FBO (A)', zorder=2)
+ax_l6.bar(1, t*0.15, 0.5, bottom=t*0.55, color=ORANGE, edgecolor='white', linewidth=1.5, label='FBS (B)', zorder=2)
+ax_l6.bar(1, t*0.05, 0.5, bottom=t*0.70, color=GREEN, edgecolor='white', linewidth=1.5, label='3PL (C)', zorder=2)
+ax_l6.bar(1, t*0.15, 0.5, bottom=t*0.75, color=GREY, edgecolor='white', linewidth=1.5, label='D2C', zorder=2)
+ax_l6.bar(1, t*0.10, 0.5, bottom=t*0.90, color=DARK_GREY, edgecolor='white', linewidth=1.5, label='Опт', zorder=2)
+ax_l6.text(0, verol_revenue_2025 + 15, f'{verol_revenue_2025:.0f} млн', ha='center', fontsize=13, fontweight='bold', color=BLUE)
+ax_l6.text(1, target_revenue + 15, f'{target_revenue:.0f} млн', ha='center', fontsize=13, fontweight='bold', color=GREEN)
+growth = (target_revenue / verol_revenue_2025 - 1) * 100
+ax_l6.annotate(f'+{growth:.0f}%', xy=(0.5, max(verol_revenue_2025, target_revenue)*0.35),
+            fontsize=22, fontweight='bold', color=GREEN, ha='center')
+ax_l6.set_xticks([0, 1])
+ax_l6.set_xticklabels(['2025\n(текущая)', 'Цель\n(12-18 мес.)'], fontsize=12, fontweight='bold')
+ax_l6.set_ylabel('Выручка, млн руб.', fontsize=12)
+ax_l6.set_title('Структура выручки по каналам', fontsize=13, fontweight='bold')
+ax_l6.legend(fontsize=8, loc='upper left', ncol=2)
+ax_l6.grid(axis='y', alpha=0.3, zorder=0)
+# Водопад
+ax_r6 = axes6[1]
+ax_r6.set_facecolor(LIGHT_BG)
+steps = ['Прибыль\n2025', '+ ABC-\nматрица', '+ Захват\nАртекс', '+ Премиум\nB2B', '= Прибыль\nцелевая']
+vals = [verol_profit_2025, effect_abc, effect_artex, effect_premium, target_profit]
+heights = []
+bottoms = []
+cum = 0
+for i, val in enumerate(vals):
+    if i == 0: heights.append(val); bottoms.append(0); cum = val
+    elif i == len(vals) - 1: heights.append(val); bottoms.append(0)
+    else: heights.append(val); bottoms.append(cum); cum += val
+colors_w = [BLUE, GREEN, BURGUNDY, GREEN, BLUE]
+x_w = np.arange(len(steps))
+bars_w = ax_r6.bar(x_w, heights, 0.55, bottom=bottoms, color=colors_w, edgecolor='white', linewidth=2, zorder=3)
+cum_val = vals[0]
+for i in range(len(vals) - 1):
+    ax_r6.plot([i + 0.275, i + 0.725], [cum_val, cum_val], color=DARK_GREY, lw=1.5, linestyle='--', alpha=0.6, zorder=1)
+    if i < len(vals) - 2: cum_val += vals[i+1]
+for i, (bar, val) in enumerate(zip(bars_w, vals)):
+    bar_x = bar.get_x() + bar.get_width()/2
+    if i == 0: ax_r6.text(bar_x, heights[i] + 2.5, f'{val:.1f}', ha='center', fontsize=12, fontweight='bold', color=BLUE)
+    elif i == len(vals) - 1: ax_r6.text(bar_x, heights[i] + 2.5, f'{val:.1f}', ha='center', fontsize=12, fontweight='bold', color=BLUE)
+    else: ax_r6.text(bar_x, bottoms[i] + heights[i] + 1.5, f'+{val:.1f}', ha='center', fontsize=11, fontweight='bold', color=DARK_GREY)
+growth_p = (target_profit / verol_profit_2025 - 1) * 100
+ax_r6.annotate(f'Рост прибыли: +{growth_p:.0f}%\nROS: 6.5% → {target_profit/target_revenue*100:.1f}%',
+            xy=(4, target_profit * 0.65), fontsize=11, color=BLUE, fontweight='bold', ha='right',
+            bbox=dict(boxstyle='round', facecolor='white', edgecolor=BLUE, alpha=0.95, pad=0.8))
+ax_r6.set_xticks(x_w)
+ax_r6.set_xticklabels(steps, fontsize=10, fontweight='bold')
+ax_r6.set_ylabel('Чистая прибыль, млн руб.', fontsize=12)
+ax_r6.set_title('Декомпозиция роста прибыли', fontsize=13, fontweight='bold')
+ax_r6.axhline(y=0, color=DARK_GREY, linewidth=1, alpha=0.3, zorder=0)
+ax_r6.grid(axis='y', alpha=0.3, zorder=0)
+plt.tight_layout()
+svg6 = fig_to_svg(fig6)
+plt.close(fig6)
+
+print("SVG-графики сгенерированы.")
+print(f"Размер SVG1: {len(svg1):,} байт")
+print(f"Размер SVG2: {len(svg2):,} байт")
+print(f"Размер SVG3: {len(svg3):,} байт")
+print(f"Размер SVG5: {len(svg5):,} байт")
+print(f"Размер SVG6: {len(svg6):,} байт")
+
+# ====================== HTML ======================
+html_content = f"""<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verol — Стратегический анализ рынка обоев РФ</title>
+<style>
+  * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+  body {{ 
+    background: #F9FAFB; 
+    font-family: 'DejaVu Sans', 'Segoe UI', system-ui, sans-serif; 
+    color: #1F2937; 
+    line-height: 1.5;
+  }}
+
+  .container {{ max-width: 1200px; margin: 0 auto; padding: 20px 16px; }}
+
+  /* Заголовок */
+  .header {{
+    text-align: center; padding: 40px 20px; margin-bottom: 20px;
+    background: white; border-radius: 12px; border: 1px solid #E5E7EB;
+  }}
+  .header h1 {{ font-size: clamp(20px, 4vw, 32px); color: #0A4B8F; font-weight: 800; }}
+  .header p {{ color: #6B7280; margin-top: 8px; font-size: clamp(14px, 2.5vw, 18px); }}
+  .header .date {{ 
+    display: inline-block; margin-top: 12px; padding: 4px 16px;
+    background: #FEE2E2; color: #A6192E; border-radius: 20px;
+    font-weight: 700; font-size: 14px;
+  }}
+
+  /* Слайды */
+  .slide {{
+    background: white; border-radius: 12px; border: 1px solid #E5E7EB;
+    margin-bottom: 32px; overflow: hidden;
+  }}
+  .slide-title {{
+    padding: 20px 24px; font-size: clamp(16px, 3vw, 22px); font-weight: 800;
+    color: #0A4B8F; border-bottom: 2px solid #E5E7EB;
+  }}
+  .slide-content {{ padding: 20px 12px; text-align: center; }}
+  .slide-content svg {{ width: 100%; height: auto; max-height: 600px; }}
+
+  /* Сетка 3 колонки (для ABC-матрицы) */
+  .abc-grid {{
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; padding: 16px;
+  }}
+  @media (max-width: 768px) {{
+    .abc-grid {{ grid-template-columns: 1fr; }}
+  }}
+
+  .abc-card {{
+    border-radius: 10px; padding: 20px 16px; border: 2px solid;
+  }}
+  .abc-card.card-a {{ border-color: #A6192E; background: #FEE2E2; }}
+  .abc-card.card-b {{ border-color: #E8923F; background: #FFF3E0; }}
+  .abc-card.card-c {{ border-color: #2D8B4E; background: #F0FAF0; }}
+
+  .abc-card h3 {{ font-size: 18px; margin-bottom: 12px; text-align: center; }}
+  .abc-card.card-a h3 {{ color: #A6192E; }}
+  .abc-card.card-b h3 {{ color: #E8923F; }}
+  .abc-card.card-c h3 {{ color: #2D8B4E; }}
+
+  .abc-card .bar-row {{ display: flex; align-items: center; margin: 8px 0; gap: 10px; }}
+  .abc-card .bar-label {{ font-size: 13px; font-weight: 700; min-width: 60px; }}
+  .abc-card .bar-fill {{
+    height: 28px; border-radius: 6px; display: flex; align-items: center;
+    justify-content: flex-end; padding-right: 8px; color: white;
+    font-weight: 700; font-size: 14px; transition: width 0.5s;
+  }}
+  .abc-card.card-a .bar-fill {{ background: #A6192E; }}
+  .abc-card.card-b .bar-fill {{ background: #E8923F; }}
+  .abc-card.card-c .bar-fill {{ background: #2D8B4E; }}
+
+  .abc-card .steps {{ margin-top: 16px; font-size: 13px; line-height: 1.6; }}
+  .abc-card .effect {{
+    margin-top: 12px; padding: 10px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; text-align: center;
+  }}
+  .abc-card.card-a .effect {{ background: white; color: #A6192E; }}
+  .abc-card.card-b .effect {{ background: white; color: #E8923F; }}
+  .abc-card.card-c .effect {{ background: white; color: #2D8B4E; }}
+
+  /* Две колонки */
+  .two-col {{
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; padding: 16px;
+  }}
+  @media (max-width: 768px) {{
+    .two-col {{ grid-template-columns: 1fr; }}
+  }}
+
+  .col-card {{
+    border-radius: 10px; padding: 20px; border: 2px solid #E5E7EB;
+  }}
+
+  /* Метрики */
+  .metrics-grid {{
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; padding: 16px;
+  }}
+  @media (max-width: 768px) {{
+    .metrics-grid {{ grid-template-columns: repeat(2, 1fr); }}
+  }}
+  @media (max-width: 480px) {{
+    .metrics-grid {{ grid-template-columns: 1fr; }}
+  }}
+
+  .metric-card {{
+    text-align: center; padding: 16px; border-radius: 10px;
+    border: 2px solid #E5E7EB; background: white;
+  }}
+  .metric-card .metric-value {{
+    font-size: clamp(24px, 5vw, 36px); font-weight: 800;
+  }}
+  .metric-card .metric-label {{ font-size: 13px; color: #6B7280; margin-top: 4px; }}
+  .metric-card.green .metric-value {{ color: #2D8B4E; }}
+  .metric-card.blue .metric-value {{ color: #0A4B8F; }}
+  .metric-card.red .metric-value {{ color: #A6192E; }}
+  .metric-card.orange .metric-value {{ color: #E8923F; }}
+
+  /* Футер */
+  .footer {{
+    text-align: center; padding: 30px; color: #9CA3AF; font-size: 13px;
+    border-top: 1px solid #E5E7EB; margin-top: 32px;
+  }}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Заголовок -->
+  <div class="header">
+    <h1>Рынок производителей обоев РФ</h1>
+    <p>Стратегический анализ • ООО «Евро-Трейд» (Verol)</p>
+    <span class="date">Июль 2025</span>
+  </div>
+
+  <!-- Слайд 1: Рынок + Verol -->
+  <div class="slide">
+    <div class="slide-title">1. Рынок производителей обоев РФ и траектория Verol</div>
+    <div class="slide-content">{svg1}</div>
+  </div>
+
+  <!-- Метрики (ключевые цифры) -->
+  <div class="metrics-grid">
+    <div class="metric-card red">
+      <div class="metric-value">−5.5%</div>
+      <div class="metric-label">Падение рынка 2024→2025</div>
+    </div>
+    <div class="metric-card blue">
+      <div class="metric-value">667 млн ₽</div>
+      <div class="metric-label">Выручка Verol 2025</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-value">1.50%</div>
+      <div class="metric-label">Доля рынка Verol</div>
+    </div>
+    <div class="metric-card orange">
+      <div class="metric-value">×47</div>
+      <div class="metric-label">Рост выручки за 5 лет</div>
+    </div>
+  </div>
+
+  <!-- Слайд 2: Топ-12 -->
+  <div class="slide">
+    <div class="slide-title">2. Рейтинг производителей обоев РФ — 2025 год</div>
+    <div class="slide-content">{svg2}</div>
+  </div>
+
+  <!-- Слайд 3: Эффект Артекс -->
+  <div class="slide">
+    <div class="slide-title">3. Эффект банкротства Артекс (май 2025)</div>
+    <div class="slide-content">{svg3}</div>
+  </div>
+
+  <!-- Слайд 4: ABC-матрица (без SVG, нативные HTML-бары + responsive) -->
+  <div class="slide">
+    <div class="slide-title">4. Инициатива 1: ABC-матрица логистики (FBO → FBS/3PL)</div>
+    
+    <div class="abc-grid">
+      <!-- A -->
+      <div class="abc-card card-a">
+        <h3>A-ПОЗИЦИИ: FBO</h3>
+        <div class="bar-row">
+          <span class="bar-label">SKU</span>
+          <div class="bar-fill" style="width:20%">20%</div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Выручка</span>
+          <div class="bar-fill" style="width:80%">80%</div>
+        </div>
+        <div class="steps">
+          ✓ Топ-позиции остаются на складах МП<br>
+          ✓ Быстрая доставка — защита выдачи<br>
+          ✓ Алгоритмы не понижают карточки<br>
+          ⚠ Риск БПЛА → страховка + мин. остаток
+        </div>
+        <div class="effect">ЭФФЕКТ: Защита 80% выручки от алгоритмов<br>Доля в выручке: 55% (снижена с 75%)</div>
+      </div>
+
+      <!-- B -->
+      <div class="abc-card card-b">
+        <h3>B-ПОЗИЦИИ: FBS</h3>
+        <div class="bar-row">
+          <span class="bar-label">SKU</span>
+          <div class="bar-fill" style="width:30%">30%</div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Выручка</span>
+          <div class="bar-fill" style="width:15%">15%</div>
+        </div>
+        <div class="steps">
+          ① Вывести товар со складов МП<br>
+          ② Разместить на собственном складе<br>
+          ③ Сменить модель: FBO → FBS<br>
+          ④ При заказе → упаковать → в ПВЗ
+        </div>
+        <div class="effect">ЭФФЕКТ: Комиссия 12% (было 22%)<br>Экономия: ~15 млн руб./год</div>
+      </div>
+
+      <!-- C -->
+      <div class="abc-card card-c">
+        <h3>C-ПОЗИЦИИ: 3PL + FBS</h3>
+        <div class="bar-row">
+          <span class="bar-label">SKU</span>
+          <div class="bar-fill" style="width:50%">50%</div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Выручка</span>
+          <div class="bar-fill" style="width:5%">5%</div>
+        </div>
+        <div class="steps">
+          ① Вывести неликвид со складов МП<br>
+          ② Отвезти на 3PL-склад оператора<br>
+          ③ Подключить 3PL к API МП<br>
+          ④ 3PL сам: хранит, пакует, отгружает
+        </div>
+        <div class="effect">ЭФФЕКТ: Хранение в 3 раза дешевле<br>Высвобождение: ~50 млн руб. кэша</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Слайд 5: Захват Артекс + Премиум -->
+  <div class="slide">
+    <div class="slide-title">5. Инициативы 2 и 3: Захват доли Артекс + Премиум B2B</div>
+    <div class="slide-content">{svg5}</div>
+    <div class="two-col" style="margin-top:8px;">
+      <div class="col-card" style="background:#FEE2E2; border-color:#A6192E;">
+        <strong style="color:#A6192E;">Захват Артекс:</strong><br>
+        Дилеры (60+) → 40 млн | Тендеры ЖК → 15 млн | Регионы → 7 млн<br>
+        Итого: +62 млн выручки | +7.4 млн прибыли/год
+      </div>
+      <div class="col-card" style="background:#F0FAF0; border-color:#2D8B4E;">
+        <strong style="color:#2D8B4E;">Премиум B2B:</strong><br>
+        Капсульная коллекция | Ателье, архбюро, HoReCa | Маржа 45-55%<br>
+        Цель: +50 млн выручки | +10 млн прибыли/год | Бенчмарк: Лоймина 1.3 млрд
+      </div>
+    </div>
+  </div>
+
+  <!-- Слайд 6: Целевая модель -->
+  <div class="slide">
+    <div class="slide-title">6. Целевая финансовая модель: эффект трех инициатив</div>
+    <div class="slide-content">{svg6}</div>
+  </div>
+
+  <!-- Финальные метрики -->
+  <div class="metrics-grid">
+    <div class="metric-card blue">
+      <div class="metric-value">+17%</div>
+      <div class="metric-label">Рост выручки</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-value">+81%</div>
+      <div class="metric-label">Рост прибыли</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-value">11.7%</div>
+      <div class="metric-label">Целевой ROS</div>
+    </div>
+    <div class="metric-card blue">
+      <div class="metric-value">1.76%</div>
+      <div class="metric-label">Целевая доля рынка</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    ООО «Евро-Трейд» (Verol) • Краснодарский край • Июль 2025<br>
+    Данные: Росстат (ОКВЭД 17.24), финансовая отчетность 20 компаний
+  </div>
+
+</div>
+</body>
+</html>"""
+
+# Сохраняем HTML
+html_path = '/content/Verol_Strategy_Analysis.html'
+with open(html_path, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print(f"\n{'='*70}")
+print(f"HTML-СТРАНИЦА СОХРАНЕНА")
+print(f"{'='*70}")
+print(f"Файл: {html_path}")
+print(f"Размер: {len(html_content):,} байт")
+print(f"\nИНСТРУКЦИЯ ДЛЯ GITHUB PAGES:")
+print(f"1. Загрузите файл в репозиторий GitHub")
+print(f"2. Settings → Pages → Source: main branch → /root → Save")
+print(f"3. Страница будет доступна по адресу:")
+print(f"   https://[username].github.io/[repo]/Verol_Strategy_Analysis.html")
+print(f"\nПРЕИМУЩЕСТВА HTML:")
+print(f"✓ Адаптивность — auto-scale под любой экран")
+print(f"✓ SVG-графики — векторные, четкие на retina")
+print(f"✓ ABC-матрица — нативные бары, responsive grid")
+print(f"✓ Метрики — перестраиваются (4→2→1 колонка)")
+print(f"✓ Никакого зума — читается на iPhone без скролла")
+print(f"{'='*70}")
