@@ -3,48 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verol — Анализ рынка обоев РФ 2025</title>
+<title>Verol — McKinsey Report 2025</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #F9FAFB; font-family: system-ui, -apple-system, sans-serif; color: #1F2937; line-height: 1.5; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+  body { background: #F9FAFB; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1F2937; line-height: 1.4; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
 
-  .header { text-align: center; padding: 32px 20px; margin-bottom: 24px; background: white; border-radius: 12px; border: 1px solid #E5E7EB; }
-  .header h1 { font-size: clamp(20px, 4vw, 32px); color: #0A4B8F; font-weight: 800; }
-  .header p { color: #6B7280; margin-top: 4px; font-size: clamp(14px, 2.5vw, 18px); }
-  .header span { display: inline-block; margin-top: 8px; padding: 4px 16px; background: #FEE2E2; color: #A6192E; border-radius: 20px; font-weight: 700; font-size: 14px; }
+  /* McKinsey Header */
+  .header { padding: 40px 32px; margin-bottom: 32px; background: white; border-left: 6px solid #0A4B8F; }
+  .header h1 { font-size: clamp(22px, 4vw, 34px); color: #0A4B8F; font-weight: 700; letter-spacing: -0.5px; }
+  .header .subtitle { color: #6B7280; font-size: clamp(14px, 2.5vw, 17px); margin-top: 6px; font-weight: 400; }
+  .header .meta { margin-top: 12px; font-size: 13px; color: #9CA3AF; }
+  .header .meta span { color: #A6192E; font-weight: 600; }
 
-  .slide { background: white; border-radius: 12px; border: 1px solid #E5E7EB; margin-bottom: 24px; overflow: hidden; }
-  .slide-title { padding: 18px 24px; font-size: clamp(16px, 3vw, 22px); font-weight: 800; color: #0A4B8F; border-bottom: 2px solid #E5E7EB; }
-  .slide-content { padding: 20px 16px; }
+  /* Слайд McKinsey */
+  .slide { background: white; margin-bottom: 28px; border-top: 3px solid #0A4B8F; }
+  .slide-title { padding: 20px 28px 0 28px; font-size: clamp(16px, 2.5vw, 20px); font-weight: 700; color: #0A4B8F; letter-spacing: -0.3px; }
+  .slide-subtitle { padding: 4px 28px 16px 28px; font-size: 13px; color: #9CA3AF; font-weight: 400; }
+  .slide-content { padding: 0 20px 24px 20px; }
   .slide-content svg { width: 100%; height: auto; display: block; }
 
-  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-  @media (max-width: 768px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px) { .metrics-grid { grid-template-columns: 1fr; } }
-  .metric-card { text-align: center; padding: 18px 12px; border-radius: 10px; border: 2px solid #E5E7EB; background: white; }
-  .metric-value { font-size: clamp(22px, 5vw, 34px); font-weight: 800; }
-  .metric-label { font-size: 13px; color: #6B7280; margin-top: 4px; }
-  .green .metric-value { color: #2D8B4E; } .blue .metric-value { color: #0A4B8F; } .red .metric-value { color: #A6192E; } .orange .metric-value { color: #E8923F; }
+  /* KPI Grid */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 32px; background: #E5E7EB; }
+  @media (max-width: 768px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+  .kpi-card { background: white; padding: 24px 16px; text-align: center; }
+  .kpi-value { font-size: clamp(24px, 4vw, 36px); font-weight: 700; letter-spacing: -1px; }
+  .kpi-label { font-size: 12px; color: #9CA3AF; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .kpi-red .kpi-value { color: #A6192E; } .kpi-blue .kpi-value { color: #0A4B8F; } .kpi-green .kpi-value { color: #2D8B4E; }
 
-  .abc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 16px; }
+  /* ABC Grid */
+  .abc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 8px 8px 16px 8px; }
   @media (max-width: 768px) { .abc-grid { grid-template-columns: 1fr; } }
-  .abc-card { border-radius: 10px; padding: 18px 14px; border: 2px solid; }
-  .abc-card.a { border-color: #A6192E; background: #FEE2E2; } .abc-card.b { border-color: #E8923F; background: #FFF3E0; } .abc-card.c { border-color: #2D8B4E; background: #F0FAF0; }
-  .abc-card h3 { font-size: 17px; margin-bottom: 10px; text-align: center; } .a h3 { color: #A6192E; } .b h3 { color: #E8923F; } .c h3 { color: #2D8B4E; }
-  .bar-row { display: flex; align-items: center; margin: 6px 0; gap: 10px; }
-  .bar-label { font-size: 13px; font-weight: 700; min-width: 55px; }
-  .bar-fill { height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: white; font-weight: 700; font-size: 13px; }
-  .a .bar-fill { background: #A6192E; } .b .bar-fill { background: #E8923F; } .c .bar-fill { background: #2D8B4E; }
-  .steps { margin-top: 14px; font-size: 13px; line-height: 1.6; }
-  .effect { margin-top: 10px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-align: center; }
-  .a .effect { background: white; color: #A6192E; } .b .effect { background: white; color: #E8923F; } .c .effect { background: white; color: #2D8B4E; }
+  .abc-card { padding: 24px 20px; }
+  .abc-card.a { background: #FEF2F2; border-left: 4px solid #A6192E; }
+  .abc-card.b { background: #FFF7ED; border-left: 4px solid #E8923F; }
+  .abc-card.c { background: #F0FDF4; border-left: 4px solid #2D8B4E; }
+  .abc-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
+  .abc-card.a h3 { color: #A6192E; } .abc-card.b h3 { color: #E8923F; } .abc-card.c h3 { color: #2D8B4E; }
+  .abc-metric { display: flex; align-items: center; margin: 10px 0; gap: 12px; }
+  .abc-metric-label { font-size: 13px; font-weight: 600; color: #4B5563; min-width: 60px; }
+  .abc-metric-bar { flex: 1; height: 28px; background: #E5E7EB; border-radius: 4px; overflow: hidden; }
+  .abc-metric-fill { height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 700; font-size: 14px; }
+  .abc-card.a .abc-metric-fill { background: #A6192E; } .abc-card.b .abc-metric-fill { background: #E8923F; } .abc-card.c .abc-metric-fill { background: #2D8B4E; }
+  .abc-steps { margin-top: 16px; font-size: 13px; line-height: 1.7; color: #4B5563; }
+  .abc-effect { margin-top: 14px; padding: 12px; background: white; font-size: 13px; font-weight: 700; text-align: center; }
+  .abc-card.a .abc-effect { color: #A6192E; } .abc-card.b .abc-effect { color: #E8923F; } .abc-card.c .abc-effect { color: #2D8B4E; }
 
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 12px 16px; }
+  /* Two Column */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 8px; }
   @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
-  .col-card { border-radius: 10px; padding: 16px; border: 2px solid #E5E7EB; font-size: 13px; line-height: 1.5; }
+  .strat-card { padding: 24px; }
+  .strat-card.red { background: #FEF2F2; border-left: 4px solid #A6192E; }
+  .strat-card.green { background: #F0FDF4; border-left: 4px solid #2D8B4E; }
+  .strat-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+  .strat-card.red h4 { color: #A6192E; } .strat-card.green h4 { color: #2D8B4E; }
+  .strat-card ul { list-style: none; font-size: 13px; line-height: 1.8; color: #4B5563; }
+  .strat-card ul li::before { content: "— "; color: #9CA3AF; }
+  .strat-card .total { margin-top: 14px; padding: 10px; background: white; font-weight: 700; font-size: 13px; text-align: center; }
 
-  .footer { text-align: center; padding: 24px; color: #9CA3AF; font-size: 13px; border-top: 1px solid #E5E7EB; margin-top: 28px; }
+  /* Footer */
+  .footer { padding: 32px; text-align: center; color: #9CA3AF; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-top: 1px solid #E5E7EB; }
 </style>
 </head>
 <body>
@@ -52,343 +70,366 @@
 
 <div class="header">
   <h1>Рынок производителей обоев РФ</h1>
-  <p>Стратегический анализ &bull; ООО «Евро-Трейд» (Verol)</p>
-  <span>Июль 2025</span>
+  <div class="subtitle">Стратегический анализ конкурентной позиции ООО «Евро-Трейд» (Verol)</div>
+  <div class="meta">КОНФИДЕНЦИАЛЬНО • Июль 2025 • <span>ОКВЭД 17.24</span></div>
 </div>
 
-<div class="metrics-grid">
-  <div class="metric-card red"><div class="metric-value">-5.5%</div><div class="metric-label">Падение рынка 2024→2025</div></div>
-  <div class="metric-card blue"><div class="metric-value">667 млн ₽</div><div class="metric-label">Выручка Verol 2025</div></div>
-  <div class="metric-card green"><div class="metric-value">1.50%</div><div class="metric-label">Доля рынка Verol</div></div>
-  <div class="metric-card orange"><div class="metric-value">×47</div><div class="metric-label">Рост выручки за 5 лет</div></div>
+<div class="kpi-row">
+  <div class="kpi-card kpi-red"><div class="kpi-value">−5.5%</div><div class="kpi-label">Сжатие рынка 2024→2025</div></div>
+  <div class="kpi-card kpi-blue"><div class="kpi-value">667 млн ₽</div><div class="kpi-label">Выручка Verol 2025</div></div>
+  <div class="kpi-card kpi-green"><div class="kpi-value">1.50%</div><div class="kpi-label">Доля рынка</div></div>
+  <div class="kpi-card kpi-blue"><div class="kpi-value">12 из 20</div><div class="kpi-label">Место в рейтинге</div></div>
 </div>
 
-<!-- СЛАЙД 1: Рынок + Verol -->
+<!-- СЛАЙД 1 -->
 <div class="slide">
-  <div class="slide-title">1. Рынок производителей обоев РФ и траектория Verol</div>
+  <div class="slide-title">1. Динамика рынка и траектория Verol</div>
+  <div class="slide-subtitle">Совокупная выручка 20 производителей обоев РФ, млрд руб. • Выручка Verol, млн руб.</div>
   <div class="slide-content">
-    <svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-      <!-- Сетка -->
-      <line x1="40" y1="60" x2="960" y2="60" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="40" y1="120" x2="960" y2="120" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="40" y1="180" x2="960" y2="180" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="40" y1="240" x2="960" y2="240" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="40" y1="300" x2="960" y2="300" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="40" y1="360" x2="960" y2="360" stroke="#F3F4F6" stroke-width="1"/>
-
-      <!-- Бары рынка -->
-      <rect x="60" y="310" width="90" height="110" fill="#D1D5DB" rx="4"/>
-      <rect x="200" y="280" width="90" height="140" fill="#D1D5DB" rx="4"/>
-      <rect x="340" y="270" width="90" height="150" fill="#D1D5DB" rx="4"/>
-      <rect x="480" y="230" width="90" height="190" fill="#D1D5DB" rx="4"/>
-      <rect x="620" y="240" width="90" height="180" fill="#D1D5DB" rx="4"/>
-      <rect x="760" y="255" width="90" height="165" fill="#D1D5DB" rx="4"/>
-
-      <!-- Метки внутри баров -->
-      <text x="105" y="365" text-anchor="middle" fill="#4B5563" font-size="15" font-weight="bold">33.8</text>
-      <text x="245" y="340" text-anchor="middle" fill="#4B5563" font-size="15" font-weight="bold">40.9</text>
-      <text x="385" y="330" text-anchor="middle" fill="#4B5563" font-size="15" font-weight="bold">41.8</text>
-      <text x="525" y="290" text-anchor="middle" fill="#4B5563" font-size="15" font-weight="bold">47.9</text>
-      <text x="665" y="300" text-anchor="middle" fill="#4B5563" font-size="15" font-weight="bold">46.9</text>
-      <text x="805" y="315" text-anchor="middle" fill="#4B5563" font-size="15" font-weight="bold">44.4</text>
-
-      <!-- Темпы роста -->
-      <text x="245" y="268" text-anchor="middle" fill="#2D8B4E" font-size="11" font-weight="bold">+21.2%</text>
-      <text x="385" y="258" text-anchor="middle" fill="#2D8B4E" font-size="11" font-weight="bold">+2.2%</text>
-      <text x="525" y="218" text-anchor="middle" fill="#2D8B4E" font-size="11" font-weight="bold">+14.4%</text>
-      <text x="665" y="228" text-anchor="middle" fill="#A6192E" font-size="11" font-weight="bold">-1.9%</text>
-      <text x="805" y="243" text-anchor="middle" fill="#A6192E" font-size="11" font-weight="bold">-5.5%</text>
-
-      <!-- Годы -->
-      <text x="105" y="460" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">2020</text>
-      <text x="245" y="460" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">2021</text>
-      <text x="385" y="460" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">2022</text>
-      <text x="525" y="460" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">2023</text>
-      <text x="665" y="460" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">2024</text>
-      <text x="805" y="460" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">2025</text>
-
-      <!-- Линия Verol -->
-      <polyline points="105,300 245,255 385,245 525,185 665,200 805,210" fill="none" stroke="#0A4B8F" stroke-width="4"/>
-      <circle cx="105" cy="300" r="8" fill="white" stroke="#0A4B8F" stroke-width="3"/>
-      <circle cx="245" cy="255" r="8" fill="white" stroke="#0A4B8F" stroke-width="3"/>
-      <circle cx="385" cy="245" r="8" fill="white" stroke="#0A4B8F" stroke-width="3"/>
-      <circle cx="525" cy="185" r="8" fill="white" stroke="#0A4B8F" stroke-width="3"/>
-      <circle cx="665" cy="200" r="8" fill="white" stroke="#0A4B8F" stroke-width="3"/>
-      <circle cx="805" cy="210" r="8" fill="white" stroke="#0A4B8F" stroke-width="3"/>
-
-      <!-- Метки Verol -->
-      <rect x="75" y="278" width="60" height="18" rx="4" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
-      <text x="105" y="291" text-anchor="middle" fill="#0A4B8F" font-size="11" font-weight="bold">14 млн</text>
-      <rect x="215" y="233" width="60" height="18" rx="4" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
-      <text x="245" y="246" text-anchor="middle" fill="#0A4B8F" font-size="11" font-weight="bold">44 млн</text>
-      <rect x="355" y="223" width="60" height="18" rx="4" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
-      <text x="385" y="236" text-anchor="middle" fill="#0A4B8F" font-size="11" font-weight="bold">127 млн</text>
-      <rect x="495" y="163" width="60" height="18" rx="4" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
-      <text x="525" y="176" text-anchor="middle" fill="#0A4B8F" font-size="11" font-weight="bold">333 млн</text>
-      <rect x="635" y="178" width="60" height="18" rx="4" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
-      <text x="665" y="191" text-anchor="middle" fill="#0A4B8F" font-size="11" font-weight="bold">651 млн</text>
-      <rect x="775" y="188" width="60" height="18" rx="4" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
-      <text x="805" y="201" text-anchor="middle" fill="#0A4B8F" font-size="11" font-weight="bold">667 млн</text>
-
-      <!-- Доли рынка -->
-      <text x="105" y="488" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="bold">Доля 0.042%</text>
-      <text x="245" y="488" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="bold">Доля 0.108%</text>
-      <text x="385" y="488" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="bold">Доля 0.303%</text>
-      <text x="525" y="488" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="bold">Доля 0.695%</text>
-      <text x="665" y="488" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="bold">Доля 1.386%</text>
-      <text x="805" y="488" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="bold">Доля 1.504%</text>
+    <svg viewBox="0 0 1000 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- Фон сетки -->
+      <line x1="60" y1="40" x2="960" y2="40" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="60" y1="100" x2="960" y2="100" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="60" y1="160" x2="960" y2="160" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="60" y1="220" x2="960" y2="220" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="60" y1="280" x2="960" y2="280" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="60" y1="340" x2="960" y2="340" stroke="#F3F4F6" stroke-width="1"/>
 
       <!-- Ось Y -->
-      <text x="30" y="65" text-anchor="end" fill="#6B7280" font-size="10">50</text>
-      <text x="30" y="125" text-anchor="end" fill="#6B7280" font-size="10">40</text>
-      <text x="30" y="185" text-anchor="end" fill="#6B7280" font-size="10">30</text>
-      <text x="30" y="245" text-anchor="end" fill="#6B7280" font-size="10">20</text>
-      <text x="30" y="305" text-anchor="end" fill="#6B7280" font-size="10">10</text>
-    </svg>
-  </div>
-</div>
+      <text x="50" y="44" text-anchor="end" fill="#9CA3AF" font-size="10">50</text>
+      <text x="50" y="104" text-anchor="end" fill="#9CA3AF" font-size="10">40</text>
+      <text x="50" y="164" text-anchor="end" fill="#9CA3AF" font-size="10">30</text>
+      <text x="50" y="224" text-anchor="end" fill="#9CA3AF" font-size="10">20</text>
+      <text x="50" y="284" text-anchor="end" fill="#9CA3AF" font-size="10">10</text>
+      <text x="50" y="344" text-anchor="end" fill="#9CA3AF" font-size="10">0</text>
 
-<!-- СЛАЙД 2: Топ-12 -->
-<div class="slide">
-  <div class="slide-title">2. Рейтинг производителей обоев РФ — 2025 год (12 из 20)</div>
-  <div class="slide-content">
-    <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
       <!-- Бары -->
-      <rect x="120" y="20" width="700" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="58" width="680" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="96" width="660" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="134" width="620" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="172" width="580" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="210" width="540" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="248" width="500" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="286" width="300" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="324" width="260" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="362" width="240" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="400" width="220" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="120" y="438" width="180" height="30" fill="#0A4B8F" rx="4"/>
+      <rect x="80" y="215" width="90" height="125" fill="#D1D5DB" rx="3"/>
+      <rect x="220" y="195" width="90" height="145" fill="#D1D5DB" rx="3"/>
+      <rect x="360" y="190" width="90" height="150" fill="#D1D5DB" rx="3"/>
+      <rect x="500" y="155" width="90" height="185" fill="#D1D5DB" rx="3"/>
+      <rect x="640" y="162" width="90" height="178" fill="#D1D5DB" rx="3"/>
+      <rect x="780" y="175" width="90" height="165" fill="#D1D5DB" rx="3"/>
 
-      <!-- Названия -->
-      <text x="110" y="40" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Артекс</text>
-      <text x="110" y="78" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Маякпринт</text>
-      <text x="110" y="116" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">КОФ Палитра</text>
-      <text x="110" y="154" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Эрисманн</text>
-      <text x="110" y="192" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Аспект Ру</text>
-      <text x="110" y="230" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Индустрия</text>
-      <text x="110" y="268" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Деко Груп</text>
-      <text x="110" y="306" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Лоймина</text>
-      <text x="110" y="344" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Фипар</text>
-      <text x="110" y="382" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Лукдекор</text>
-      <text x="110" y="420" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">НТП</text>
-      <text x="110" y="458" text-anchor="end" fill="#1F2937" font-size="12" font-weight="bold">Verol</text>
+      <!-- Метки млрд внутри баров -->
+      <text x="125" y="280" text-anchor="middle" fill="#4B5563" font-size="14" font-weight="700">33.8</text>
+      <text x="265" y="260" text-anchor="middle" fill="#4B5563" font-size="14" font-weight="700">40.9</text>
+      <text x="405" y="255" text-anchor="middle" fill="#4B5563" font-size="14" font-weight="700">41.8</text>
+      <text x="545" y="220" text-anchor="middle" fill="#4B5563" font-size="14" font-weight="700">47.9</text>
+      <text x="685" y="227" text-anchor="middle" fill="#4B5563" font-size="14" font-weight="700">46.9</text>
+      <text x="825" y="240" text-anchor="middle" fill="#4B5563" font-size="14" font-weight="700">44.4</text>
 
-      <!-- Выручка -->
-      <text x="825" y="40" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">8.800 млрд</text>
-      <text x="805" y="78" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">7.400 млрд</text>
-      <text x="785" y="116" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">7.300 млрд</text>
-      <text x="745" y="154" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">6.200 млрд</text>
-      <text x="705" y="192" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">3.200 млрд</text>
-      <text x="665" y="230" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">2.800 млрд</text>
-      <text x="625" y="268" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">2.600 млрд</text>
-      <text x="425" y="306" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">1.300 млрд</text>
-      <text x="385" y="344" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">0.792 млрд</text>
-      <text x="365" y="382" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">0.759 млрд</text>
-      <text x="345" y="420" text-anchor="start" fill="#6B7280" font-size="11" font-weight="bold">0.700 млрд</text>
-      <text x="305" y="458" text-anchor="start" fill="#0A4B8F" font-size="11" font-weight="bold">0.667 млрд</text>
-
-      <!-- ROS -->
-      <text x="825" y="55" text-anchor="start" fill="#A6192E" font-size="9" font-weight="bold">ROS -23.9% | Прибыль -2100 млн</text>
-      <text x="805" y="93" text-anchor="start" fill="#6B7280" font-size="9" font-weight="bold">ROS +8.6% | Прибыль +640 млн</text>
-      <text x="785" y="131" text-anchor="start" fill="#2D8B4E" font-size="9" font-weight="bold">ROS +16.4% | Прибыль +1200 млн</text>
-      <text x="745" y="169" text-anchor="start" fill="#6B7280" font-size="9" font-weight="bold">ROS +5.1% | Прибыль +317 млн</text>
-      <text x="705" y="207" text-anchor="start" fill="#6B7280" font-size="9" font-weight="bold">ROS +4.3% | Прибыль +138 млн</text>
-      <text x="665" y="245" text-anchor="start" fill="#6B7280" font-size="9" font-weight="bold">ROS +9.4% | Прибыль +264 млн</text>
-      <text x="625" y="283" text-anchor="start" fill="#6B7280" font-size="9" font-weight="bold">ROS +3.6% | Прибыль +94 млн</text>
-      <text x="425" y="321" text-anchor="start" fill="#2D8B4E" font-size="9" font-weight="bold">ROS +29.4% | Прибыль +383 млн</text>
-      <text x="385" y="359" text-anchor="start" fill="#A6192E" font-size="9" font-weight="bold">ROS -19.7% | Прибыль -156 млн</text>
-      <text x="365" y="397" text-anchor="start" fill="#6B7280" font-size="9" font-weight="bold">ROS +8.8% | Прибыль +67 млн</text>
-      <text x="345" y="435" text-anchor="start" fill="#6B7280" font-size="9" font-weight="bold">ROS +3.8% | Прибыль +27 млн</text>
-      <text x="305" y="473" text-anchor="start" fill="#0A4B8F" font-size="9" font-weight="bold">ROS +6.5% | Прибыль +43 млн</text>
-
-      <!-- Метки -->
-      <rect x="700" y="10" width="160" height="30" rx="6" fill="#FEE2E2" stroke="#A6192E" stroke-width="1.5"/>
-      <text x="780" y="30" text-anchor="middle" fill="#A6192E" font-size="9" font-weight="bold">БАНКРОТ май 2025</text>
-
-      <rect x="200" y="440" width="100" height="22" rx="6" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
-      <text x="250" y="455" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="bold">12-е место из 20</text>
-
-      <rect x="320" y="278" width="100" height="22" rx="6" fill="#F0FAF0" stroke="#2D8B4E" stroke-width="1.5"/>
-      <text x="370" y="293" text-anchor="middle" fill="#2D8B4E" font-size="9" font-weight="bold">Лучшая ROS</text>
-    </svg>
-  </div>
-</div>
-
-<!-- СЛАЙД 3: Эффект Артекс -->
-<div class="slide">
-  <div class="slide-title">3. Эффект банкротства Артекс (май 2025)</div>
-  <div class="slide-content">
-    <svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-      <line x1="50" y1="80" x2="870" y2="80" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="50" y1="160" x2="870" y2="160" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="50" y1="240" x2="870" y2="240" stroke="#F3F4F6" stroke-width="1"/>
-      <line x1="50" y1="320" x2="870" y2="320" stroke="#F3F4F6" stroke-width="1"/>
-
-      <!-- Рынок без Артекс -->
-      <rect x="70" y="240" width="90" height="140" fill="#D1D5DB" rx="4"/>
-      <rect x="210" y="210" width="90" height="170" fill="#D1D5DB" rx="4"/>
-      <rect x="350" y="220" width="90" height="160" fill="#D1D5DB" rx="4"/>
-      <rect x="490" y="190" width="90" height="190" fill="#D1D5DB" rx="4"/>
-      <rect x="630" y="200" width="90" height="180" fill="#D1D5DB" rx="4"/>
-      <rect x="770" y="210" width="90" height="170" fill="#D1D5DB" rx="4"/>
-
-      <!-- Артекс -->
-      <rect x="70" y="100" width="90" height="140" fill="#A6192E" opacity="0.7" rx="4"/>
-      <rect x="210" y="100" width="90" height="110" fill="#A6192E" opacity="0.7" rx="4"/>
-      <rect x="350" y="80" width="90" height="140" fill="#A6192E" opacity="0.7" rx="4"/>
-      <rect x="490" y="80" width="90" height="110" fill="#A6192E" opacity="0.7" rx="4"/>
-      <rect x="630" y="90" width="90" height="110" fill="#A6192E" opacity="0.7" rx="4"/>
-      <rect x="770" y="100" width="90" height="110" fill="#A6192E" opacity="0.7" rx="4"/>
-
-      <!-- Метки -->
-      <text x="115" y="390" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">33.8</text>
-      <text x="255" y="390" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">40.9</text>
-      <text x="395" y="390" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">41.8</text>
-      <text x="535" y="390" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">47.9</text>
-      <text x="675" y="390" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">46.9</text>
-      <text x="815" y="390" text-anchor="middle" fill="#6B7280" font-size="13" font-weight="bold">44.4</text>
+      <!-- Темпы роста -->
+      <text x="265" y="183" text-anchor="middle" fill="#2D8B4E" font-size="11" font-weight="700">+21.2%</text>
+      <text x="405" y="178" text-anchor="middle" fill="#2D8B4E" font-size="11" font-weight="700">+2.2%</text>
+      <text x="545" y="143" text-anchor="middle" fill="#2D8B4E" font-size="11" font-weight="700">+14.4%</text>
+      <text x="685" y="150" text-anchor="middle" fill="#A6192E" font-size="11" font-weight="700">−1.9%</text>
+      <text x="825" y="163" text-anchor="middle" fill="#A6192E" font-size="11" font-weight="700">−5.5%</text>
 
       <!-- Годы -->
-      <text x="115" y="420" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="bold">2020</text>
-      <text x="255" y="420" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="bold">2021</text>
-      <text x="395" y="420" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="bold">2022</text>
-      <text x="535" y="420" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="bold">2023</text>
-      <text x="675" y="420" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="bold">2024</text>
-      <text x="815" y="420" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="bold">2025</text>
+      <text x="125" y="380" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="600">2020</text>
+      <text x="265" y="380" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="600">2021</text>
+      <text x="405" y="380" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="600">2022</text>
+      <text x="545" y="380" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="600">2023</text>
+      <text x="685" y="380" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="600">2024</text>
+      <text x="825" y="380" text-anchor="middle" fill="#6B7280" font-size="12" font-weight="600">2025</text>
+
+      <!-- Линия Verol -->
+      <polyline points="125,210 265,178 405,170 545,120 685,135 825,145" fill="none" stroke="#0A4B8F" stroke-width="3.5"/>
+      <circle cx="125" cy="210" r="7" fill="white" stroke="#0A4B8F" stroke-width="3"/>
+      <circle cx="265" cy="178" r="7" fill="white" stroke="#0A4B8F" stroke-width="3"/>
+      <circle cx="405" cy="170" r="7" fill="white" stroke="#0A4B8F" stroke-width="3"/>
+      <circle cx="545" cy="120" r="7" fill="white" stroke="#0A4B8F" stroke-width="3"/>
+      <circle cx="685" cy="135" r="7" fill="white" stroke="#0A4B8F" stroke-width="3"/>
+      <circle cx="825" cy="145" r="7" fill="white" stroke="#0A4B8F" stroke-width="3"/>
+
+      <!-- Метки Verol -->
+      <rect x="95" y="190" width="60" height="16" rx="3" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
+      <text x="125" y="201" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">14 млн</text>
+      <rect x="235" y="158" width="60" height="16" rx="3" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
+      <text x="265" y="169" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">44 млн</text>
+      <rect x="375" y="150" width="60" height="16" rx="3" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
+      <text x="405" y="161" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">127 млн</text>
+      <rect x="515" y="100" width="60" height="16" rx="3" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
+      <text x="545" y="111" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">333 млн</text>
+      <rect x="655" y="115" width="60" height="16" rx="3" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
+      <text x="685" y="126" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">651 млн</text>
+      <rect x="795" y="125" width="60" height="16" rx="3" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
+      <text x="825" y="136" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">667 млн</text>
+
+      <!-- Доли -->
+      <text x="125" y="405" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">Доля 0.042%</text>
+      <text x="265" y="405" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">Доля 0.108%</text>
+      <text x="405" y="405" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">Доля 0.303%</text>
+      <text x="545" y="405" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">Доля 0.695%</text>
+      <text x="685" y="405" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">Доля 1.386%</text>
+      <text x="825" y="405" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">Доля 1.504%</text>
+
+      <!-- Подписи осей -->
+      <text x="500" y="445" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">Источник: Росстат, ОКВЭД 17.24, финансовая отчетность 20 компаний</text>
+    </svg>
+  </div>
+</div>
+
+<!-- СЛАЙД 2 -->
+<div class="slide">
+  <div class="slide-title">2. Конкурентный ландшафт: топ-12 производителей</div>
+  <div class="slide-subtitle">Выручка 2025, млрд руб. • Рентабельность продаж (ROS), % • Чистая прибыль, млн руб.</div>
+  <div class="slide-content">
+    <svg viewBox="0 0 950 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <rect x="150" y="15" width="730" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="55" width="680" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="95" width="660" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="135" width="620" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="175" width="580" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="215" width="540" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="255" width="500" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="295" width="300" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="335" width="260" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="375" width="240" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="415" width="220" height="32" fill="#E5E7EB" rx="3"/>
+      <rect x="150" y="455" width="180" height="32" fill="#0A4B8F" rx="3"/>
+
+      <text x="140" y="36" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Артекс</text>
+      <text x="140" y="76" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Маякпринт</text>
+      <text x="140" y="116" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">КОФ Палитра</text>
+      <text x="140" y="156" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Эрисманн</text>
+      <text x="140" y="196" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Аспект Ру</text>
+      <text x="140" y="236" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Индустрия</text>
+      <text x="140" y="276" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Деко Груп</text>
+      <text x="140" y="316" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Лоймина</text>
+      <text x="140" y="356" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Фипар</text>
+      <text x="140" y="396" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Лукдекор</text>
+      <text x="140" y="436" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">НТП</text>
+      <text x="140" y="476" text-anchor="end" fill="#1F2937" font-size="13" font-weight="600">Verol</text>
+
+      <text x="885" y="36" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">8.800 млрд</text>
+      <text x="835" y="76" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">7.400 млрд</text>
+      <text x="815" y="116" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">7.300 млрд</text>
+      <text x="775" y="156" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">6.200 млрд</text>
+      <text x="735" y="196" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">3.200 млрд</text>
+      <text x="695" y="236" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">2.800 млрд</text>
+      <text x="655" y="276" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">2.600 млрд</text>
+      <text x="455" y="316" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">1.300 млрд</text>
+      <text x="415" y="356" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">0.792 млрд</text>
+      <text x="395" y="396" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">0.759 млрд</text>
+      <text x="375" y="436" text-anchor="start" fill="#6B7280" font-size="12" font-weight="600">0.700 млрд</text>
+      <text x="335" y="476" text-anchor="start" fill="#0A4B8F" font-size="12" font-weight="700">0.667 млрд</text>
+
+      <text x="885" y="50" text-anchor="start" fill="#A6192E" font-size="10" font-weight="600">ROS −23.9% | −2 100 млн</text>
+      <text x="835" y="90" text-anchor="start" fill="#6B7280" font-size="10" font-weight="600">ROS +8.6% | +640 млн</text>
+      <text x="815" y="130" text-anchor="start" fill="#2D8B4E" font-size="10" font-weight="600">ROS +16.4% | +1 200 млн</text>
+      <text x="775" y="170" text-anchor="start" fill="#6B7280" font-size="10" font-weight="600">ROS +5.1% | +317 млн</text>
+      <text x="735" y="210" text-anchor="start" fill="#6B7280" font-size="10" font-weight="600">ROS +4.3% | +138 млн</text>
+      <text x="695" y="250" text-anchor="start" fill="#6B7280" font-size="10" font-weight="600">ROS +9.4% | +264 млн</text>
+      <text x="655" y="290" text-anchor="start" fill="#6B7280" font-size="10" font-weight="600">ROS +3.6% | +94 млн</text>
+      <text x="455" y="330" text-anchor="start" fill="#2D8B4E" font-size="10" font-weight="600">ROS +29.4% | +383 млн</text>
+      <text x="415" y="370" text-anchor="start" fill="#A6192E" font-size="10" font-weight="600">ROS −19.7% | −156 млн</text>
+      <text x="395" y="410" text-anchor="start" fill="#6B7280" font-size="10" font-weight="600">ROS +8.8% | +67 млн</text>
+      <text x="375" y="450" text-anchor="start" fill="#6B7280" font-size="10" font-weight="600">ROS +3.8% | +27 млн</text>
+      <text x="335" y="490" text-anchor="start" fill="#0A4B8F" font-size="10" font-weight="600">ROS +6.5% | +43 млн</text>
+
+      <rect x="700" y="5" width="200" height="22" rx="4" fill="#FEF2F2" stroke="#A6192E" stroke-width="1"/>
+      <text x="800" y="20" text-anchor="middle" fill="#A6192E" font-size="10" font-weight="700">БАНКРОТ • май 2025</text>
+
+      <rect x="200" y="458" width="130" height="22" rx="4" fill="white" stroke="#0A4B8F" stroke-width="1.5"/>
+      <text x="265" y="473" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="700">12-е место из 20</text>
+
+      <rect x="310" y="288" width="140" height="22" rx="4" fill="#F0FDF4" stroke="#2D8B4E" stroke-width="1.5"/>
+      <text x="380" y="303" text-anchor="middle" fill="#2D8B4E" font-size="10" font-weight="700">Лучшая ROS в отрасли</text>
+    </svg>
+  </div>
+</div>
+
+<!-- СЛАЙД 3 -->
+<div class="slide">
+  <div class="slide-title">3. Структурный шок: банкротство Артекс</div>
+  <div class="slide-subtitle">Доля Артекс в совокупной выручке отрасли, млрд руб. • май 2025: дело №А56-42790/2025</div>
+  <div class="slide-content">
+    <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <line x1="50" y1="60" x2="870" y2="60" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="50" y1="140" x2="870" y2="140" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="50" y1="220" x2="870" y2="220" stroke="#F3F4F6" stroke-width="1"/>
+      <line x1="50" y1="300" x2="870" y2="300" stroke="#F3F4F6" stroke-width="1"/>
+
+      <text x="50" y="64" text-anchor="end" fill="#9CA3AF" font-size="10">50</text>
+      <text x="50" y="144" text-anchor="end" fill="#9CA3AF" font-size="10">40</text>
+      <text x="50" y="224" text-anchor="end" fill="#9CA3AF" font-size="10">30</text>
+      <text x="50" y="304" text-anchor="end" fill="#9CA3AF" font-size="10">20</text>
+      <text x="50" y="384" text-anchor="end" fill="#9CA3AF" font-size="10">10</text>
+
+      <!-- Рынок без Артекс -->
+      <rect x="70" y="290" width="90" height="90" fill="#D1D5DB" rx="3"/>
+      <rect x="200" y="270" width="90" height="110" fill="#D1D5DB" rx="3"/>
+      <rect x="330" y="265" width="90" height="115" fill="#D1D5DB" rx="3"/>
+      <rect x="460" y="230" width="90" height="150" fill="#D1D5DB" rx="3"/>
+      <rect x="590" y="238" width="90" height="142" fill="#D1D5DB" rx="3"/>
+      <rect x="720" y="250" width="90" height="130" fill="#D1D5DB" rx="3"/>
+
+      <!-- Артекс -->
+      <rect x="70" y="160" width="90" height="130" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="200" y="175" width="90" height="95" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="330" y="145" width="90" height="120" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="460" y="130" width="90" height="100" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="590" y="135" width="90" height="103" fill="#A6192E" opacity="0.6" rx="3"/>
+      <rect x="720" y="145" width="90" height="105" fill="#A6192E" opacity="0.6" rx="3"/>
+
+      <!-- Метки: общий объем -->
+      <text x="115" y="395" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">33.8</text>
+      <text x="245" y="395" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">40.9</text>
+      <text x="375" y="395" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">41.8</text>
+      <text x="505" y="395" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">47.9</text>
+      <text x="635" y="395" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">46.9</text>
+      <text x="765" y="395" text-anchor="middle" fill="#4B5563" font-size="12" font-weight="700">44.4</text>
+
+      <!-- Метки: доля Артекс -->
+      <text x="115" y="215" text-anchor="middle" fill="white" font-size="11" font-weight="700">31%</text>
+      <text x="245" y="215" text-anchor="middle" fill="white" font-size="11" font-weight="700">16%</text>
+      <text x="375" y="195" text-anchor="middle" fill="white" font-size="11" font-weight="700">24%</text>
+      <text x="505" y="175" text-anchor="middle" fill="white" font-size="11" font-weight="700">21%</text>
+      <text x="635" y="180" text-anchor="middle" fill="white" font-size="11" font-weight="700">20%</text>
+      <text x="765" y="190" text-anchor="middle" fill="white" font-size="11" font-weight="700">20%</text>
+
+      <!-- Годы -->
+      <text x="115" y="420" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2020</text>
+      <text x="245" y="420" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2021</text>
+      <text x="375" y="420" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2022</text>
+      <text x="505" y="420" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2023</text>
+      <text x="635" y="420" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2024</text>
+      <text x="765" y="420" text-anchor="middle" fill="#6B7280" font-size="11" font-weight="600">2025</text>
 
       <!-- Аннотация -->
-      <rect x="320" y="20" width="260" height="40" rx="8" fill="#FEE2E2" stroke="#A6192E" stroke-width="2"/>
-      <text x="450" y="45" text-anchor="middle" fill="#A6192E" font-size="11" font-weight="bold">Высвобождение 8.8 млрд руб. (20% рынка)</text>
+      <rect x="250" y="15" width="400" height="40" rx="6" fill="#FEF2F2" stroke="#A6192E" stroke-width="2"/>
+      <text x="450" y="40" text-anchor="middle" fill="#A6192E" font-size="13" font-weight="700">Высвобождение 8.8 млрд руб. — 20% рынка без хозяина</text>
     </svg>
   </div>
 </div>
 
-<!-- СЛАЙД 4: ABC-матрица (нативный HTML) -->
+<!-- СЛАЙД 4: ABC -->
 <div class="slide">
-  <div class="slide-title">4. Инициатива 1: ABC-матрица логистики (FBO → FBS/3PL)</div>
+  <div class="slide-title">4. Стратегическая инициатива I: ABC-матрица логистики</div>
+  <div class="slide-subtitle">Переход от мономодели FBO к гибридной системе FBO / FBS / 3PL</div>
   <div class="abc-grid">
     <div class="abc-card a">
-      <h3>A-ПОЗИЦИИ: FBO</h3>
-      <div class="bar-row"><span class="bar-label">SKU</span><div class="bar-fill" style="width:20%">20%</div></div>
-      <div class="bar-row"><span class="bar-label">Выручка</span><div class="bar-fill" style="width:80%">80%</div></div>
-      <div class="steps">✓ Топ-позиции на складах МП<br>✓ Быстрая доставка — защита выдачи<br>✓ Алгоритмы не понижают карточки<br>⚠ Риск БПЛА → страховка + мин. остаток</div>
-      <div class="effect">ЭФФЕКТ: Защита 80% выручки<br>Доля в выручке: 55% (с 75%)</div>
+      <h3>A-Позиции • FBO</h3>
+      <div class="abc-metric"><span class="abc-metric-label">SKU</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:20%">20%</div></div></div>
+      <div class="abc-metric"><span class="abc-metric-label">Выручка</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:80%">80%</div></div></div>
+      <div class="abc-steps">Топ-позиции остаются на складах МП. Быстрая доставка, защита органической выдачи, высокий рейтинг карточек.</div>
+      <div class="abc-effect">Защита 80% выручки • Страховка запасов</div>
     </div>
     <div class="abc-card b">
-      <h3>B-ПОЗИЦИИ: FBS</h3>
-      <div class="bar-row"><span class="bar-label">SKU</span><div class="bar-fill" style="width:30%">30%</div></div>
-      <div class="bar-row"><span class="bar-label">Выручка</span><div class="bar-fill" style="width:15%">15%</div></div>
-      <div class="steps">① Вывести товар со складов МП<br>② Разместить на своем складе<br>③ Сменить модель: FBO → FBS<br>④ При заказе → упаковать → в ПВЗ</div>
-      <div class="effect">ЭФФЕКТ: Комиссия 12% (было 22%)<br>Экономия: ~15 млн руб./год</div>
+      <h3>B-Позиции • FBS</h3>
+      <div class="abc-metric"><span class="abc-metric-label">SKU</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:30%">30%</div></div></div>
+      <div class="abc-metric"><span class="abc-metric-label">Выручка</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:15%">15%</div></div></div>
+      <div class="abc-steps">Вывод со складов МП → собственный склад → смена модели FBO→FBS → отгрузка в ПВЗ при заказе.</div>
+      <div class="abc-effect">Комиссия 12% (было 22%) • Экономия ~15 млн/год</div>
     </div>
     <div class="abc-card c">
-      <h3>C-ПОЗИЦИИ: 3PL + FBS</h3>
-      <div class="bar-row"><span class="bar-label">SKU</span><div class="bar-fill" style="width:50%">50%</div></div>
-      <div class="bar-row"><span class="bar-label">Выручка</span><div class="bar-fill" style="width:5%">5%</div></div>
-      <div class="steps">① Вывести неликвид со складов МП<br>② Отвезти на 3PL-склад оператора<br>③ Подключить 3PL к API МП<br>④ 3PL сам: хранит, пакует, отгружает</div>
-      <div class="effect">ЭФФЕКТ: Хранение в 3 раза дешевле<br>Высвобождение: ~50 млн руб. кэша</div>
+      <h3>C-Позиции • 3PL</h3>
+      <div class="abc-metric"><span class="abc-metric-label">SKU</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:50%">50%</div></div></div>
+      <div class="abc-metric"><span class="abc-metric-label">Выручка</span><div class="abc-metric-bar"><div class="abc-metric-fill" style="width:5%">5%</div></div></div>
+      <div class="abc-steps">Вывод неликвида → 3PL-склад оператора → подключение API → 3PL хранит, пакует, отгружает.</div>
+      <div class="abc-effect">Хранение в 3× дешевле • Высвобождение ~50 млн кэша</div>
     </div>
   </div>
 </div>
 
-<!-- СЛАЙД 5: Захват Артекс + Премиум -->
+<!-- СЛАЙД 5 -->
 <div class="slide">
-  <div class="slide-title">5. Инициативы 2 и 3: Захват доли Артекс + Премиум B2B</div>
+  <div class="slide-title">5. Стратегические инициативы II и III: Захват рынка + Премиум B2B</div>
+  <div class="slide-subtitle">Монетизация ухода Артекс • Запуск высокомаржинального B2B-направления</div>
   <div class="two-col">
-    <div class="col-card" style="background:#FEE2E2;border-color:#A6192E">
-      <strong style="color:#A6192E;font-size:15px">Захват доли Артекс</strong><br><br>
-      <b>Каналы:</b><br>
-      • Дилеры (60+) → 40 млн руб.<br>
-      • Тендеры ЖК → 15 млн руб.<br>
-      • Региональные сети → 7 млн руб.<br><br>
-      <b>Итого:</b> +62 млн выручки | +7.4 млн прибыли/год<br>
-      <b>Доля рынка:</b> 1.50% → 1.64%
+    <div class="strat-card red">
+      <h4>Захват доли Артекс</h4>
+      <ul>
+        <li>60+ дилеров Артекс остались без поставщика</li>
+        <li>Оптовые тендеры на отделку ЖК (50–500 квартир)</li>
+        <li>Региональные розничные DIY-сети</li>
+      </ul>
+      <div class="total">Доп. выручка: +62 млн руб./год<br>Доп. прибыль: +7.4 млн руб./год<br>Доля рынка: 1.50% → 1.64%</div>
     </div>
-    <div class="col-card" style="background:#F0FAF0;border-color:#2D8B4E">
-      <strong style="color:#2D8B4E;font-size:15px">Премиум B2B</strong><br><br>
-      <b>Бенчмарки ROS:</b><br>
-      • Verol сейчас: 6.5%<br>
-      • Медиана рынка: 5.3%<br>
-      • Обои Фактура: 26.2%<br>
-      • Лоймина: 29.4% ← бенчмарк<br>
-      • Verol цель: 15.0%<br><br>
-      <b>План:</b> капсульная коллекция, ателье, HoReCa<br>
-      <b>Цель:</b> +50 млн выручки | +10 млн прибыли/год
+    <div class="strat-card green">
+      <h4>Премиум B2B</h4>
+      <ul>
+        <li>Капсульная дизайнерская коллекция (3–5 в год)</li>
+        <li>Каналы: ателье (200+), архбюро, HoReCa</li>
+        <li>Валовая маржа 45–55% (vs 35–40% mass market)</li>
+        <li>Бенчмарк: Лоймина — 1.3 млрд руб. при ROS 29.4%</li>
+      </ul>
+      <div class="total">Доп. выручка: +50 млн руб./год<br>Доп. прибыль: +10 млн руб./год<br>Целевой ROS: 6.5% → 15%</div>
     </div>
   </div>
 </div>
 
-<!-- СЛАЙД 6: Целевая модель -->
+<!-- СЛАЙД 6 -->
 <div class="slide">
-  <div class="slide-title">6. Целевая финансовая модель: эффект трех инициатив</div>
+  <div class="slide-title">6. Целевая финансовая модель</div>
+  <div class="slide-subtitle">Консолидированный эффект трех стратегических инициатив • Горизонт: 12–18 месяцев</div>
   <div class="slide-content">
-    <svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-      <!-- Выручка: было -->
-      <rect x="30" y="200" width="150" height="160" fill="#A6192E" rx="4"/>
-      <rect x="30" y="280" width="150" height="40" fill="#D1D5DB" rx="4"/>
-      <rect x="30" y="310" width="150" height="50" fill="#6B7280" rx="4"/>
-      <text x="105" y="270" text-anchor="middle" fill="white" font-size="13" font-weight="bold">FBO 75%</text>
-      <text x="105" y="300" text-anchor="middle" fill="#4B5563" font-size="11" font-weight="bold">D2C 15%</text>
-      <text x="105" y="335" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Опт 10%</text>
-      <text x="105" y="185" text-anchor="middle" fill="#0A4B8F" font-size="15" font-weight="bold">667 млн</text>
+    <svg viewBox="0 0 950 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- Выручка 2025 -->
+      <rect x="20" y="200" width="140" height="140" fill="#A6192E" rx="4"/>
+      <rect x="20" y="260" width="140" height="40" fill="#D1D5DB" rx="4"/>
+      <rect x="20" y="300" width="140" height="40" fill="#6B7280" rx="4"/>
+      <text x="90" y="260" text-anchor="middle" fill="white" font-size="11" font-weight="700">FBO 75%</text>
+      <text x="90" y="284" text-anchor="middle" fill="#4B5563" font-size="10" font-weight="600">D2C 15%</text>
+      <text x="90" y="324" text-anchor="middle" fill="white" font-size="10" font-weight="600">Опт 10%</text>
+      <text x="90" y="190" text-anchor="middle" fill="#0A4B8F" font-size="14" font-weight="700">667 млн ₽</text>
+      <text x="90" y="175" text-anchor="middle" fill="#9CA3AF" font-size="10" font-weight="600">2025 • ФАКТ</text>
 
-      <!-- Выручка: стало -->
-      <rect x="430" y="150" width="150" height="110" fill="#A6192E" rx="4"/>
-      <rect x="430" y="260" width="150" height="30" fill="#E8923F" rx="4"/>
-      <rect x="430" y="290" width="150" height="20" fill="#2D8B4E" rx="4"/>
-      <rect x="430" y="310" width="150" height="30" fill="#D1D5DB" rx="4"/>
-      <rect x="430" y="340" width="150" height="60" fill="#6B7280" rx="4"/>
-      <text x="505" y="210" text-anchor="middle" fill="white" font-size="11" font-weight="bold">FBO (A) 55%</text>
-      <text x="505" y="276" text-anchor="middle" fill="white" font-size="9" font-weight="bold">FBS (B) 15%</text>
-      <text x="505" y="302" text-anchor="middle" fill="white" font-size="9" font-weight="bold">3PL (C) 5%</text>
-      <text x="505" y="326" text-anchor="middle" fill="#4B5563" font-size="9" font-weight="bold">D2C 15%</text>
-      <text x="505" y="365" text-anchor="middle" fill="white" font-size="9" font-weight="bold">Опт 10%</text>
-      <text x="505" y="135" text-anchor="middle" fill="#2D8B4E" font-size="15" font-weight="bold">780 млн</text>
+      <!-- Выручка цель -->
+      <rect x="360" y="160" width="140" height="110" fill="#A6192E" rx="4"/>
+      <rect x="360" y="270" width="140" height="30" fill="#E8923F" rx="4"/>
+      <rect x="360" y="300" width="140" height="15" fill="#2D8B4E" rx="4"/>
+      <rect x="360" y="315" width="140" height="30" fill="#D1D5DB" rx="4"/>
+      <rect x="360" y="345" width="140" height="55" fill="#6B7280" rx="4"/>
+      <text x="430" y="220" text-anchor="middle" fill="white" font-size="10" font-weight="700">FBO (A) 55%</text>
+      <text x="430" y="288" text-anchor="middle" fill="white" font-size="9" font-weight="600">FBS (B) 15%</text>
+      <text x="430" y="310" text-anchor="middle" fill="white" font-size="9" font-weight="600">3PL 5%</text>
+      <text x="430" y="332" text-anchor="middle" fill="#4B5563" font-size="9" font-weight="600">D2C 15%</text>
+      <text x="430" y="368" text-anchor="middle" fill="white" font-size="9" font-weight="600">Опт 10%</text>
+      <text x="430" y="150" text-anchor="middle" fill="#2D8B4E" font-size="14" font-weight="700">780 млн ₽</text>
+      <text x="430" y="135" text-anchor="middle" fill="#9CA3AF" font-size="10" font-weight="600">ЦЕЛЬ • 12–18 мес.</text>
 
-      <!-- Стрелка -->
-      <text x="280" y="290" text-anchor="middle" fill="#2D8B4E" font-size="28" font-weight="bold">+17% →</text>
+      <text x="250" y="290" text-anchor="middle" fill="#2D8B4E" font-size="22" font-weight="700">+17%</text>
 
-      <!-- Водопад справа -->
-      <rect x="620" y="180" width="80" height="50" fill="#0A4B8F" rx="4"/>
-      <text x="660" y="210" text-anchor="middle" fill="white" font-size="12" font-weight="bold">43.3</text>
-      <text x="660" y="170" text-anchor="middle" fill="#0A4B8F" font-size="10" font-weight="bold">Прибыль 2025</text>
+      <!-- Водопад -->
+      <rect x="560" y="170" width="70" height="45" fill="#0A4B8F" rx="4"/>
+      <text x="595" y="197" text-anchor="middle" fill="white" font-size="13" font-weight="700">43.3</text>
+      <text x="595" y="163" text-anchor="middle" fill="#0A4B8F" font-size="9" font-weight="600">2025</text>
 
-      <rect x="710" y="130" width="80" height="50" fill="#2D8B4E" rx="4"/>
-      <text x="750" y="160" text-anchor="middle" fill="white" font-size="12" font-weight="bold">+17.5</text>
-      <text x="750" y="120" text-anchor="middle" fill="#2D8B4E" font-size="10" font-weight="bold">ABC-матрица</text>
+      <rect x="650" y="120" width="70" height="45" fill="#2D8B4E" rx="4"/>
+      <text x="685" y="147" text-anchor="middle" fill="white" font-size="13" font-weight="700">+17.5</text>
+      <text x="685" y="113" text-anchor="middle" fill="#2D8B4E" font-size="9" font-weight="600">ABC</text>
 
-      <rect x="800" y="100" width="80" height="50" fill="#A6192E" rx="4"/>
-      <text x="840" y="130" text-anchor="middle" fill="white" font-size="12" font-weight="bold">+7.4</text>
-      <text x="840" y="90" text-anchor="middle" fill="#A6192E" font-size="10" font-weight="bold">Захват Артекс</text>
+      <rect x="740" y="80" width="70" height="45" fill="#A6192E" rx="4"/>
+      <text x="775" y="107" text-anchor="middle" fill="white" font-size="13" font-weight="700">+7.4</text>
+      <text x="775" y="73" text-anchor="middle" fill="#A6192E" font-size="9" font-weight="600">Артекс</text>
 
-      <line x1="700" y1="205" x2="710" y2="155" stroke="#6B7280" stroke-width="2" stroke-dasharray="4,4"/>
-      <line x1="790" y1="155" x2="800" y2="125" stroke="#6B7280" stroke-width="2" stroke-dasharray="4,4"/>
+      <rect x="830" y="50" width="70" height="45" fill="#2D8B4E" rx="4"/>
+      <text x="865" y="77" text-anchor="middle" fill="white" font-size="13" font-weight="700">+10</text>
+      <text x="865" y="43" text-anchor="middle" fill="#2D8B4E" font-size="9" font-weight="600">B2B</text>
 
-      <!-- Итог -->
-      <rect x="700" y="250" width="180" height="60" fill="#0A4B8F" rx="8"/>
-      <text x="790" y="278" text-anchor="middle" fill="white" font-size="16" font-weight="bold">= 78.2 млн</text>
-      <text x="790" y="298" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Рост прибыли +81%</text>
-      <text x="790" y="340" text-anchor="middle" fill="#2D8B4E" font-size="13" font-weight="bold">ROS: 6.5% → 11.7%</text>
+      <line x1="630" y1="192" x2="650" y2="142" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <line x1="720" y1="142" x2="740" y2="102" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <line x1="810" y1="102" x2="830" y2="72" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+      <!-- Итого -->
+      <rect x="650" y="240" width="250" height="55" fill="#0A4B8F" rx="6"/>
+      <text x="775" y="265" text-anchor="middle" fill="white" font-size="16" font-weight="700">= 78.2 млн руб.</text>
+      <text x="775" y="284" text-anchor="middle" fill="white" font-size="11" font-weight="600">Рост прибыли +81% • ROS 6.5% → 11.7%</text>
     </svg>
   </div>
 </div>
 
-<div class="metrics-grid">
-  <div class="metric-card blue"><div class="metric-value">+17%</div><div class="metric-label">Рост выручки</div></div>
-  <div class="metric-card green"><div class="metric-value">+81%</div><div class="metric-label">Рост прибыли</div></div>
-  <div class="metric-card green"><div class="metric-value">11.7%</div><div class="metric-label">Целевой ROS</div></div>
-  <div class="metric-card blue"><div class="metric-value">1.76%</div><div class="metric-label">Целевая доля рынка</div></div>
+<div class="kpi-row">
+  <div class="kpi-card kpi-blue"><div class="kpi-value">+17%</div><div class="kpi-label">Рост выручки</div></div>
+  <div class="kpi-card kpi-green"><div class="kpi-value">+81%</div><div class="kpi-label">Рост прибыли</div></div>
+  <div class="kpi-card kpi-green"><div class="kpi-value">11.7%</div><div class="kpi-label">Целевой ROS</div></div>
+  <div class="kpi-card kpi-blue"><div class="kpi-value">1.76%</div><div class="kpi-label">Целевая доля рынка</div></div>
 </div>
 
-<div class="footer">ООО «Евро-Трейд» (Verol) • Краснодарский край • Июль 2025<br>Данные: Росстат (ОКВЭД 17.24), финансовая отчетность 20 компаний</div>
+<div class="footer">ООО «Евро-Трейд» (Verol) • Краснодарский край • Июль 2025 • Источник: Росстат (ОКВЭД 17.24), ФНС, финансовая отчетность 20 компаний</div>
 
 </div>
 </body>
