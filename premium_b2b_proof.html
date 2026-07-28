@@ -1,0 +1,183 @@
+html = '''<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verol — Премиум B2B: доказательная база</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F9FAFB; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1F2937; line-height: 1.5; }
+  .page { max-width: 1100px; margin: 40px auto; background: white; border-top: 4px solid #0A4B8F; padding: 40px 48px; }
+  h1 { font-size: 26px; color: #0A4B8F; font-weight: 700; margin-bottom: 6px; }
+  .subtitle { font-size: 14px; color: #9CA3AF; margin-bottom: 32px; }
+  
+  .section { margin-bottom: 32px; }
+  .section-title { font-size: 18px; font-weight: 700; color: #0A4B8F; margin-bottom: 12px; padding-left: 12px; border-left: 4px solid #0A4B8F; }
+  
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 768px) { .fact-grid { grid-template-columns: 1fr; } }
+  
+  .fact-card { padding: 20px; border-radius: 8px; border: 1px solid #E5E7EB; }
+  .fact-card.red { background: #FEF2F2; border-color: #A6192E; }
+  .fact-card.green { background: #F0FDF4; border-color: #2D8B4E; }
+  .fact-card.blue { background: #F0F4FA; border-color: #0A4B8F; }
+  .fact-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .fact-card.red h3 { color: #A6192E; } .fact-card.green h3 { color: #2D8B4E; } .fact-card.blue h3 { color: #0A4B8F; }
+  .fact-card .big-num { font-size: 32px; font-weight: 800; margin: 4px 0; }
+  .fact-card.red .big-num { color: #A6192E; } .fact-card.green .big-num { color: #2D8B4E; } .fact-card.blue .big-num { color: #0A4B8F; }
+  .fact-card p { font-size: 13px; color: #6B7280; line-height: 1.6; }
+  
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #0A4B8F; color: white; padding: 10px 14px; text-align: left; font-weight: 600; }
+  td { padding: 10px 14px; border-bottom: 1px solid #E5E7EB; }
+  tr.highlight { background: #F0FDF4; font-weight: 600; }
+  
+  .quote { padding: 16px 20px; background: #F9FAFB; border-left: 4px solid #0A4B8F; font-size: 14px; color: #4B5563; margin: 16px 0; font-style: italic; }
+  
+  .conclusion { padding: 24px; background: #0A4B8F; color: white; border-radius: 8px; font-size: 15px; font-weight: 600; text-align: center; margin-top: 20px; }
+  .footer-note { text-align: center; color: #9CA3AF; font-size: 11px; margin-top: 32px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Почему Verol должен тестировать премиум B2B сейчас</h1>
+<div class="subtitle">Доказательная база на основе финансовой отчетности 20 производителей обоев РФ • Данные ФНС, Росстат, 2025</div>
+
+<!-- ФАКТ 1: ПРЕМИУМ РАСТЕТ, МАСС-МАРКЕТ ПАДАЕТ -->
+<div class="section">
+  <div class="section-title">1. Премиум-сегмент зарабатывает деньги. Масс-маркет их теряет.</div>
+  
+  <div class="table-wrap">
+    <table>
+      <tr><th>Компания</th><th>Выручка 2025</th><th>Чистая прибыль</th><th>ROS</th><th>Сегмент</th></tr>
+      <tr class="highlight"><td>Лоймина</td><td>1 300 млн ₽</td><td>+383 млн ₽</td><td>29.4%</td><td>Премиум B2B</td></tr>
+      <tr class="highlight"><td>Обои Фактура</td><td>154 млн ₽</td><td>+40 млн ₽</td><td>26.2%</td><td>Премиум / дизайн</td></tr>
+      <tr class="highlight"><td>Пластер</td><td>283 млн ₽</td><td>+52 млн ₽</td><td>18.2%</td><td>Средний+</td></tr>
+      <tr class="highlight"><td>Элизиум</td><td>2 200 млн ₽</td><td>+329 млн ₽</td><td>15.0%</td><td>Средний+</td></tr>
+      <tr><td>Verol</td><td>667 млн ₽</td><td>+43 млн ₽</td><td>6.5%</td><td>E-com / масс</td></tr>
+      <tr style="background:#FEF2F2"><td>Артекс</td><td>8 800 млн ₽</td><td>−2 100 млн ₽</td><td>−23.9%</td><td>Масс-маркет DIY</td></tr>
+      <tr style="background:#FEF2F2"><td>Фипар</td><td>792 млн ₽</td><td>−156 млн ₽</td><td>−19.7%</td><td>Масс-маркет</td></tr>
+      <tr style="background:#FEF2F2"><td>ТД Пермские обои</td><td>184 млн ₽</td><td>−1.6 млн ₽</td><td>−0.9%</td><td>Масс-маркет</td></tr>
+    </table>
+  </div>
+  
+  <div class="fact-grid">
+    <div class="fact-card red">
+      <h3>Масс-маркет</h3>
+      <div class="big-num">−23.9%</div>
+      <p>ROS лидера масс-маркета (Артекс). Банкротство в мае 2025. Еще два игрока масс-сегмента — в убытке.</p>
+    </div>
+    <div class="fact-card green">
+      <h3>Премиум / Средний+</h3>
+      <div class="big-num">29.4%</div>
+      <p>ROS лидера премиум-сегмента (Лоймина). Все 4 компании премиум/среднего+ сегмента прибыльны. Средняя ROS: 22.2%.</p>
+    </div>
+  </div>
+  
+  <div class="quote">
+    «Мы видим четкое расслоение рынка: масс-маркет умирает под давлением комиссий МП и дорогого сырья. Премиум чувствует себя хорошо, потому что там другие правила игры: нет комиссий маркетплейсов, высокая добавленная стоимость, прямой контакт с клиентом через дизайнера.»
+  </div>
+</div>
+
+<!-- ФАКТ 2: Verol на плато -->
+<div class="section">
+  <div class="section-title">2. Verol исчерпал органический рост в e-com нише.</div>
+  
+  <div class="fact-grid">
+    <div class="fact-card blue">
+      <h3>Темпы роста выручки Verol</h3>
+      <div class="big-num">+2.6%</div>
+      <p>2024→2025. Годом ранее было +95%. Органический рост в e-com канале закончился. Дальнейшие попытки наращивать объемы на FBO ведут к деградации маржи.</p>
+    </div>
+    <div class="fact-card blue">
+      <h3>Доля рынка</h3>
+      <div class="big-num">1.50%</div>
+      <p>Verol занимает 1.5% рынка производителей обоев РФ. Это 12-е место из 20. Чтобы расти дальше, нужно не просто стоять на месте — нужно забирать долю у конкурентов из других сегментов.</p>
+    </div>
+  </div>
+  
+  <div class="quote">
+    «Рынок сжимается на 5.5% в год. Оставаться только в e-com нише — значит согласиться на падение вместе с рынком. Рост возможен только через захват чужой доли.»
+  </div>
+</div>
+
+<!-- ФАКТ 3: ОКНО ВОЗМОЖНОСТЕЙ -->
+<div class="section">
+  <div class="section-title">3. Уход Артекс открыл окно возможностей, которое закроется через 12-18 месяцев.</div>
+  
+  <div class="fact-grid">
+    <div class="fact-card red">
+      <h3>Освободившийся рынок</h3>
+      <div class="big-num">8.8 млрд ₽</div>
+      <p>Выручка Артекс в 2025 году. Эти деньги не исчезли — покупатели перераспределяются между оставшимися игроками. Через 12-18 месяцев новые контракты будут заключены — и войти станет кратно дороже.</p>
+    </div>
+    <div class="fact-card green">
+      <h3>Дилеры без поставщика</h3>
+      <div class="big-num">60+</div>
+      <p>Оценка количества дилеров Артекс, которые остались без поставщика. Им нужно закрывать полку. Первый, кто придет с адекватным предложением — займет место.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ФАКТ 4: МАКРОЭКОНОМИКА -->
+<div class="section">
+  <div class="section-title">4. Макроэкономика подтверждает сдвиг в пользу премиум.</div>
+  
+  <div class="table-wrap">
+    <table>
+      <tr><th>Показатель</th><th>2024</th><th>2025</th><th>2026 (прогноз)</th></tr>
+      <tr><td>Ставка ЦБ РФ</td><td>16%</td><td>18%</td><td>16.5%</td></tr>
+      <tr><td>Ввод жилья, млн м²</td><td>110</td><td>107</td><td>98</td></tr>
+      <tr><td>Ипотечные выдачи, трлн ₽</td><td>5.2</td><td>4.8</td><td>3.9</td></tr>
+      <tr><td>Реальные доходы населения, % г/г</td><td>+2.1%</td><td>+1.5%</td><td>+0.8%</td></tr>
+    </table>
+  </div>
+  
+  <div class="fact-grid">
+    <div class="fact-card red">
+      <h3>Масс-маркет под давлением</h3>
+      <p>Падение ипотеки на 25% и сжатие ввода жилья на 8.4% бьют по массовому спросу на отделочные материалы. Эконом-ремонт откладывается.</p>
+    </div>
+    <div class="fact-card green">
+      <h3>Премиум устойчив</h3>
+      <p>Премиум-ремонт финансируется не из ипотеки, а из накоплений и текущих доходов состоятельных клиентов. Дизайнерские проекты менее чувствительны к ставке ЦБ.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ФАКТ 5: СТОИМОСТЬ ОШИБКИ -->
+<div class="section">
+  <div class="section-title">5. Стоимость тестирования — 250 тыс. руб. Стоимость бездействия — убыток к 2027 году.</div>
+  
+  <div class="fact-grid">
+    <div class="fact-card blue">
+      <h3>Бюджет пилота на 12 месяцев</h3>
+      <div class="big-num">250 000 ₽</div>
+      <p>Каталог + образцы + встречи с дизайнерами + продвижение. Это 0.04% от годовой выручки Verol. Даже при полном провале пилота компания не заметит потерь.</p>
+    </div>
+    <div class="fact-card red">
+      <h3>Прогнозный убыток при бездействии</h3>
+      <div class="big-num">−22 млн ₽</div>
+      <p>Финансовый мост показывает: при сохранении текущей модели компания выходит на чистый убыток к 2027 году. 250 тыс. руб. на пилот vs 22 млн убытка — соотношение 1:88.</p>
+    </div>
+  </div>
+</div>
+
+<div class="conclusion">
+  Премиум B2B — не фантазия. Это единственный сегмент рынка, который показывает прибыльность выше 15% ROS.<br>
+  У нас есть данные, бенчмарки и окно возможностей. Тестирование стоит 250 тысяч рублей. Бездействие — 22 миллиона.
+</div>
+
+<div class="footer-note">Источники: финансовая отчетность 20 компаний (ОКВЭД 17.24, ФНС, 2025) • Росстат • ЦБ РФ • Минстрой РФ</div>
+
+</div>
+</body>
+</html>'''
+
+with open('/content/premium_b2b_proof.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print("Готово: /content/premium_b2b_proof.html")
+print(f"Размер: {len(html):,} байт")
